@@ -5,7 +5,7 @@ import { LiMenuMobile } from "./liMenuMobile";
 export const MenuMobile = () => {
 
     return (
-        <div className="">
+        <div className="border-t py-3">
             <ul className="flex justify-around">
                 <LiMenuMobile rota="/" text="Início" />
                 <LiMenuMobile rota="/buscar" text="Buscar" />

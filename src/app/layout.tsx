@@ -19,16 +19,16 @@ const Layout = ({ children }: Props) => {
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <header>
+                    <header className="border-b">
                         <HeaderTop />
                     </header>
                     <div>
                         {children}
                     </div>
-                    <footer>
+                    <footer className="border-t mb-20 md:mb-0">
                         <Footer />
                     </footer>
-                    <div className="w-full fixed pb-5  bottom-0 md:hidden">
+                    <div className="w-full bg-black fixed bottom-0 md:hidden z-50">
                         <MenuMobile />
                     </div>
                 </ThemeProvider >
