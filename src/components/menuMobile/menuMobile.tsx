@@ -1,5 +1,3 @@
-import { Calendar, CircleUserRound, House, Search } from "lucide-react"
-import { usePathname } from "next/navigation";
 import { LiMenuMobile } from "./liMenuMobile";
 
 export const MenuMobile = () => {

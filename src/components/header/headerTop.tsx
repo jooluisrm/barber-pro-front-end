@@ -1,6 +1,4 @@
-import { CircleUserRound } from 'lucide-react';
-import { LiMenu } from '../liMenu';
-import { ButtonLogin } from '../LoginAndRegister/buttonLogin';
+import { LiMenu } from './liMenu';
 import { ToggleTheme } from '../toggleTheme';
 import { DialogRegister } from '../LoginAndRegister/dialogRegister';
 
