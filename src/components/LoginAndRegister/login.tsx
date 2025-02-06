@@ -2,7 +2,11 @@ import { Button } from "../ui/button";
 import { DialogDescription, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
 
-export const Login = () => {
+type Props = {
+    nextPage: VoidFunction;
+}
+
+export const Login = ({ nextPage }: Props) => {
     return (
         <div>
             <div className="pb-5">
@@ -25,7 +29,7 @@ export const Login = () => {
                 </div>
                 <Button className="font-bold">Fazer Login</Button>
             </div>
-            <p className="flex justify-center gap-1"><p>Não possui uma conta?</p><span className="text-[#0072bc] font-bold cursor-pointer">Cadastre-se</span></p>
+            <p className="flex justify-center gap-1"><p>Não possui uma conta?</p><button onClick={() => nextPage()} className="text-[#0072bc] font-bold cursor-pointer">Cadastre-se</button></p>
         </div>
     );
 }
