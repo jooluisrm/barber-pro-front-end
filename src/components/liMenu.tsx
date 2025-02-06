@@ -11,10 +11,11 @@ type Props = {
 export const LiMenu = ({ text, rota }: Props) => {
     const pathname = usePathname();
 
-    const isActive = (rota === "inicio" && pathname === "/") || pathname.includes(rota);
+    // Corrigindo para verificar a igualdade exata da rota
+    const isActive = pathname === (rota.startsWith("/") ? rota : `/${rota}`);
 
     return (
-        <Link href={`/${rota}`}>
+        <Link href={rota.startsWith("/") ? rota : `/${rota}`}>
             <li
                 className={`${isActive ? "text-[#0072bc]" : "" } hover:text-[#0072bc] transition-all duration-150 cursor-pointer`}
             >
