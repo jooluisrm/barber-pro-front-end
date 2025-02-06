@@ -1,8 +1,8 @@
 import { CircleUserRound } from 'lucide-react';
 import { LiMenu } from '../liMenu';
-import { ButtonLogin } from '../buttonLogin';
+import { ButtonLogin } from '../LoginAndRegister/buttonLogin';
 import { ToggleTheme } from '../toggleTheme';
-import { DialogRegister } from '../dialogRegister';
+import { DialogRegister } from '../LoginAndRegister/dialogRegister';
 
 export const HeaderTop = () => {
     return (
