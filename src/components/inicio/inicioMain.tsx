@@ -1,4 +1,5 @@
 import { EmpresasProximas } from "./empresasProximas";
+import { TodasAsEmpresas } from "./todasAsEmpresas";
 import { WelcomeSearch } from "./welcomeSearch";
 
 export const InicioMain = () => {
@@ -6,6 +7,7 @@ export const InicioMain = () => {
         <main>
             <WelcomeSearch />
             <EmpresasProximas />
+            <TodasAsEmpresas />
         </main>
     );
 }

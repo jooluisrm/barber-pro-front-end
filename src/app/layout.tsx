@@ -12,7 +12,7 @@ type Props = {
 const Layout = ({ children }: Props) => {
     return (
         <html>
-            <body className="">
+            <body>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
