@@ -28,7 +28,7 @@ const Layout = ({ children }: Props) => {
                     <footer className="border-t mb-20 md:mb-0">
                         <Footer />
                     </footer>
-                    <div className="w-full bg-black fixed bottom-0 md:hidden z-50">
+                    <div className="w-full dark:bg-black bg-white fixed bottom-0 md:hidden z-50">
                         <MenuMobile />
                     </div>
                 </ThemeProvider >
