@@ -22,7 +22,7 @@ const Layout = ({ children }: Props) => {
                     <header className="border-b">
                         <HeaderTop />
                     </header>
-                    <div>
+                    <div className="mx-5 md:mx-0">
                         {children}
                     </div>
                     <footer className="border-t mb-20 md:mb-0">

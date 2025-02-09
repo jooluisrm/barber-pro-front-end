@@ -11,7 +11,7 @@ export const EmpresasProximas = () => {
                 <div className="flex flex-col items-center">
                     <Image src={localização} alt="localização" width={70}></Image>
                     <h2 className="text-lg">Habilitar localização</h2>
-                    <p className="text-gray-500">Habilite o acesso a localização para encontrarmos os estabelecimentos mais próximos à você =)</p>
+                    <p className="text-gray-500 text-center">Habilite o acesso a localização para encontrarmos os estabelecimentos mais próximos à você =)</p>
                 </div>
             </div>
         </section>

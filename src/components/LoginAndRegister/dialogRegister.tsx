@@ -34,7 +34,7 @@ export const DialogRegister = () => {
             <DialogTrigger asChild>
                 <ButtonLogin openModal={openModal} />
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="w-[400px] md:w-full">
                 {page == 1 && <Login nextPage={nextPage} />}
                 {page == 2 && <Register backPage={backPage} />}
             </DialogContent>

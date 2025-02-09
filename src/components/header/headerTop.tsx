@@ -4,7 +4,7 @@ import { DialogRegister } from '../LoginAndRegister/dialogRegister';
 
 export const HeaderTop = () => {
     return (
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container px-5 md:px-0 mx-auto flex justify-between items-center">
             <div className='flex gap-10'>
                 <div className='font-extrabold'>LOGO</div>
                 <ul className='gap-5 hidden md:flex'>
