@@ -1,12 +1,14 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import iconBarber from "../../app/barberProIcon.png";
+import iconBarber from "../../../public/assets/barberProIcon.png";
+import wallpaperLight from "../../../public/assets/appBarberWallpeaperLight.png";
+import wallpaperDark from "../../../public/assets/appBarberWallpeaper.png";
 
 export const EmpresaSection1 = () => {
     return (
         <section className="flex-[2_2_50%] lg:flex-[2_2_20%]">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center pb-5">
                 <div className="flex items-center gap-5">
                     <Image src={iconBarber} alt="icone barbearia" width={60} className="rounded-full" />
                     <div>
@@ -23,6 +25,9 @@ export const EmpresaSection1 = () => {
                     </Button>
                 </div>
             </div>
+            <Image alt="" src={wallpaperLight} className="dark:hidden rounded-md"/>
+            <Image alt="" src={wallpaperDark} className="hidden dark:flex rounded-md"/>
+            
         </section>
     );
 }

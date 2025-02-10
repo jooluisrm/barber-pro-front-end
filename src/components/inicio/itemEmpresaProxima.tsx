@@ -1,6 +1,6 @@
 import { ChevronRight, Locate, LocateFixed, MapPin } from "lucide-react";
 import Image from "next/image";
-import iconBarber from "../../app/barberProIcon.png";
+import iconBarber from "../../../public/assets/barberProIcon.png";
 import { Barbearia } from "@/types/type";
 import Link from "next/link";
 

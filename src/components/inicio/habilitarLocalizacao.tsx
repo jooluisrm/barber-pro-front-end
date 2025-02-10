@@ -1,5 +1,5 @@
 import Image from "next/image";
-import localização from "../../app/localização.png";
+import localização from "../../../public/assets/localização.png";
 
 export const HabilitarLocalizacao = () => {
     return (
