@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import iconBarber from "../../../public/assets/barberProIcon.png";
 import wallpaperLight from "../../../public/assets/appBarberWallpeaperLight.png";
 import wallpaperDark from "../../../public/assets/appBarberWallpeaper.png";
+import { EmpresaTabs } from "./empresaTabs";
 
 export const EmpresaSection1 = () => {
     return (
@@ -27,7 +28,7 @@ export const EmpresaSection1 = () => {
             </div>
             <Image alt="" src={wallpaperLight} className="dark:hidden rounded-md"/>
             <Image alt="" src={wallpaperDark} className="hidden dark:flex rounded-md"/>
-            
+            <EmpresaTabs />
         </section>
     );
 }
