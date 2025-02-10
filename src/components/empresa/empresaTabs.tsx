@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { EmpresaTabServico } from "./empresaTabServico";
+import { TabLayout } from "./tabLayout";
 
 export const EmpresaTabs = () => {
     return (
@@ -11,11 +11,17 @@ export const EmpresaTabs = () => {
                 <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
             </TabsList>
             <TabsContent value="servicos">
-                <EmpresaTabServico />
+                <TabLayout text="Serviços" type="services"/>
             </TabsContent>
-            <TabsContent value="profissionais">Change your password here.</TabsContent>
-            <TabsContent value="prudutos">Make changes to your account here.</TabsContent>
-            <TabsContent value="avaliacoes">Change your password here.</TabsContent>
+            <TabsContent value="profissionais">
+                <TabLayout text="Profissionais" type="profissionais"/>
+            </TabsContent>
+            <TabsContent value="prudutos">
+                <TabLayout text="Produtos" type="products"/>
+            </TabsContent>
+            <TabsContent value="avaliacoes">
+                <TabLayout text="Avaliações" type="avaliacao"/>
+            </TabsContent>
         </Tabs>
     );
 }
