@@ -11,7 +11,7 @@ type Props = {
 export const ItemEmpresaProxima = ({ data }: Props) => {
     // img, Endereço, nome, km
     return (
-        <Link href={`/${data.id}`}>
+        <Link href={`/empresa/${data.id}`}>
             <div className="flex justify-between items-center p-4 rounded-xl overflow-hidden max-w-[450px] border bg-[#f4f4f5] dark:bg-[#18181b] transition-all hover:scale-105 dark:hover:border-white hover:border-black">
                 <div className="flex items-center gap-3">
                     <Image alt="" src={iconBarber} width={70} className="rounded-full border-2 border-black dark:border-white"></Image>

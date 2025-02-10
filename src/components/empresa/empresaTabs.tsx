@@ -3,7 +3,7 @@ import { EmpresaTabServico } from "./empresaTabServico";
 
 export const EmpresaTabs = () => {
     return (
-        <Tabs defaultValue="servicos" className="w-full">
+        <Tabs defaultValue="servicos" className="w-full mt-5">
             <TabsList>
                 <TabsTrigger value="servicos">Serviços</TabsTrigger>
                 <TabsTrigger value="profissionais">Profissionais</TabsTrigger>

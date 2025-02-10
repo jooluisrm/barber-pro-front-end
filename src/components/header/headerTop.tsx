@@ -1,12 +1,15 @@
 import { LiMenu } from './liMenu';
 import { ToggleTheme } from '../toggleTheme';
 import { DialogRegister } from '../LoginAndRegister/dialogRegister';
+import Link from 'next/link';
+
 
 export const HeaderTop = () => {
     return (
         <div className="container px-5 md:px-0 mx-auto flex justify-between items-center">
             <div className='flex gap-10'>
-                <div className='font-extrabold'>LOGO</div>
+                <Link href={"/"}><div className='font-extrabold'>LOGO</div></Link>
+                
                 <ul className='gap-5 hidden md:flex'>
                     <LiMenu text='Início' rota='/'/>
                     <LiMenu text='Buscar' rota='buscar'/>

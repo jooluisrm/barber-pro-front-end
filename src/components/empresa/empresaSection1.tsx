@@ -5,15 +5,20 @@ import iconBarber from "../../../public/assets/barberProIcon.png";
 import wallpaperLight from "../../../public/assets/appBarberWallpeaperLight.png";
 import wallpaperDark from "../../../public/assets/appBarberWallpeaper.png";
 import { EmpresaTabs } from "./empresaTabs";
+import { Barbearia } from "@/types/type";
 
-export const EmpresaSection1 = () => {
+type Props = {
+    data: Barbearia | null;
+}
+
+export const EmpresaSection1 = ({ data }: Props) => {
     return (
         <section className="flex-[2_2_50%] lg:flex-[2_2_20%]">
             <div className="flex justify-between items-center pb-5">
                 <div className="flex items-center gap-5">
                     <Image src={iconBarber} alt="icone barbearia" width={60} className="rounded-full" />
                     <div>
-                        <h2 className="font-bold lg:text-2xl">Israel barber shop</h2>
+                        <h2 className="font-bold lg:text-2xl">{data?.nome}</h2>
                         <div className="flex items-center gap-1">
                             <Star size={15} />
                             <span className="text-sm">5.0</span>
@@ -26,8 +31,8 @@ export const EmpresaSection1 = () => {
                     </Button>
                 </div>
             </div>
-            <Image alt="" src={wallpaperLight} className="dark:hidden rounded-md"/>
-            <Image alt="" src={wallpaperDark} className="hidden dark:flex rounded-md"/>
+            <Image alt="" src={wallpaperLight} className="dark:hidden rounded-md" />
+            <Image alt="" src={wallpaperDark} className="hidden dark:flex rounded-md" />
             <EmpresaTabs />
         </section>
     );

@@ -4,7 +4,7 @@ import { ItemServico } from "./itemServico";
 
 export const EmpresaTabServico = () => {
     return (
-        <section>
+        <section className="flex flex-col gap-5">
             <div>
                 <h3 className="text-2xl">Serviços</h3>
             </div>
