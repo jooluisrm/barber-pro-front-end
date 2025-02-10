@@ -8,8 +8,8 @@ export const barbearias = [
         telefone: "(11) 98765-4321",
         foto_perfil: "/imagens/barbearia-elite.jpg",
         descricao: "Cortes modernos e atendimento de primeira!",
-        latitude: -23.5505,
-        longitude: -46.6333,
+        latitude: -15.9132177,
+        longitude: -46.108101,
         status: "ativa",
     },
     {
