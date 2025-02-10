@@ -1,5 +1,6 @@
 import { HabilitarLocalizacao } from "./habilitarLocalizacao";
 import { ItemEmpresaProxima } from "./itemEmpresaProxima";
+import { SkeletonItemEmpresa } from "./SkeletonItemEmpresa";
 
 export const EmpresasProximas = () => {
     return (
@@ -12,6 +13,7 @@ export const EmpresasProximas = () => {
                 <ItemEmpresaProxima />
                 <ItemEmpresaProxima />
                 <ItemEmpresaProxima />
+                <SkeletonItemEmpresa />
             </div>
         </section>
     );
