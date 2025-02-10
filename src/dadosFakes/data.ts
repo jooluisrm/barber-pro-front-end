@@ -21,8 +21,8 @@ export const barbearias = [
         telefone: "(21) 99876-5432",
         foto_perfil: "/imagens/barberking.jpg",
         descricao: "Especialistas em barba e cabelo.",
-        latitude: -22.9068,
-        longitude: -43.1729,
+        latitude: -15.6234918,
+        longitude: -46.4231024,
         status: "ativa",
     },
 ];

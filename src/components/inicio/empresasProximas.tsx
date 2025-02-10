@@ -28,21 +28,24 @@ export const EmpresasProximas = () => {
     const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
     const [error, setError] = useState<boolean | null>(null);
     const [empresasProximas, setEmpresasProximas] = useState<Barbearia[]>([]);
+    const [skeleton, setSkeleton] = useState(false);
 
     useEffect(() => {
         if ("geolocation" in navigator) {
+            setSkeleton(true); // Ativa o Skeleton antes de começar
+    
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const userLocation = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
                     };
-
+    
                     setLocation(userLocation);
                     setError(true);
-
+    
                     // Calcula a distância e filtra barbearias a até 50km de distância
-                    const empresasFiltradas:any = barbearias
+                    const empresasFiltradas: any = barbearias
                         .map((barbearia) => ({
                             ...barbearia,
                             distancia: calcularDistancia(
@@ -54,11 +57,15 @@ export const EmpresasProximas = () => {
                         }))
                         .filter((barbearia) => barbearia.distancia <= 50) // Apenas barbearias a ≤ 50km
                         .sort((a, b) => a.distancia - b.distancia); // Ordena por proximidade
-
+    
                     setEmpresasProximas(empresasFiltradas);
+    
+                    // Adiciona um pequeno delay antes de esconder o skeleton
+                    setTimeout(() => setSkeleton(false), 1000); 
                 },
                 (err) => {
                     setError(false);
+                    setSkeleton(false); // Remove o Skeleton mesmo em caso de erro
                     console.error(err);
                 }
             );
@@ -66,6 +73,7 @@ export const EmpresasProximas = () => {
             setError(false);
         }
     }, []);
+    
 
     return (
         <section className="container mx-auto min-h-80">
@@ -73,13 +81,23 @@ export const EmpresasProximas = () => {
                 <h1 className="text-xl">Empresas Próximas</h1>
             </div>
             {!error && <HabilitarLocalizacao />}
-            {error && (
+            {error && !skeleton && (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 py-5">
                     {empresasProximas.map((item: Barbearia) => (
                         <ItemEmpresaProxima key={item.id} data={item} />
                     ))}
                     {empresasProximas.length === 0 && <p className="dark:text-gray-400 text-gray-500">Nenhuma barbearia próxima encontrada.</p>}
                     
+                </div>
+            )}
+            {error && skeleton && (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 py-5">
+                    <SkeletonItemEmpresa />
+                    <SkeletonItemEmpresa />
+                    <SkeletonItemEmpresa />
+                    <SkeletonItemEmpresa />
+                    <SkeletonItemEmpresa />
+                    <SkeletonItemEmpresa />
                 </div>
             )}
         </section>
