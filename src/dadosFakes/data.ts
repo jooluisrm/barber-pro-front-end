@@ -14,10 +14,10 @@ export const barbearias = [
     },
     {
         id: 2,
-        nome: "BarberKing",
+        nome: "Israel barber shop",
         email: "contato@barberking.com",
         senha: "654321",
-        endereco: "Avenida Central, 456",
+        endereco: "Avenida goias , 940 - Lado do correio - 38660-000 Centro - Buritis/MG",
         telefone: "(21) 99876-5432",
         foto_perfil: "/imagens/barberking.jpg",
         descricao: "Especialistas em barba e cabelo.",

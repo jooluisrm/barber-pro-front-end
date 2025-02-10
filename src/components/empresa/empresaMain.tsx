@@ -24,9 +24,9 @@ export const EmpresaMain = () => {
     }, [id]);
 
     return (
-        <main className="lg:flex py-10">
+        <main className="lg:flex gap-20 py-10">
             <EmpresaSection1 data={empresa}/>
-            <EmpresaSection2 />
+            <EmpresaSection2 data={empresa}/>
         </main>
     );
 }
