@@ -3,6 +3,7 @@ import { ToggleTheme } from '../toggleTheme';
 import { DialogRegister } from '../LoginAndRegister/dialogRegister';
 import Link from 'next/link';
 import { ButtonPerfil } from './buttonPerfil';
+import { SelectPerfil } from './selectPerfil';
 
 
 export const HeaderTop = () => {
@@ -20,7 +21,9 @@ export const HeaderTop = () => {
             <div className='flex items-center gap-5'>
                 <ToggleTheme />
                 <DialogRegister />
-                <ButtonPerfil />
+                <div className='hidden sm:flex'>
+                    <SelectPerfil />
+                </div>
             </div>
         </div>
     )
