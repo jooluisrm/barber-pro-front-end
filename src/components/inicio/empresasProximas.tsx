@@ -82,7 +82,7 @@ export const EmpresasProximas = () => {
             </div>
             {!error && <HabilitarLocalizacao />}
             {error && !skeleton && (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 py-5">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 py-5">
                     {empresasProximas.map((item: Barbearia) => (
                         <ItemEmpresaProxima key={item.id} data={item} />
                     ))}

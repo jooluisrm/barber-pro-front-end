@@ -2,7 +2,7 @@ import { BuscarMain } from "@/components/buscar/buscarMain";
 
 const Buscar = () => {
     return (
-        <section>
+        <section className="container mx-auto min-h-screen">
             <BuscarMain />
         </section>
     );
