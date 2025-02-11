@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Clock } from "lucide-react";
 import { Button } from "../ui/button";
+import { DialogAgendamento } from "./dialogAgendamento";
 
 
 export const ItemServico = () => {
@@ -22,7 +23,7 @@ export const ItemServico = () => {
                 <span className="text-sm font-bold">15 min</span>
             </div>
             <div>
-                <Button className="font-bold">Agendar</Button>
+                <DialogAgendamento />
             </div>
         </div>
     );
