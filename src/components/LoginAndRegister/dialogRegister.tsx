@@ -9,6 +9,8 @@ import { ButtonLogin } from "./buttonLogin";
 import { Login } from "./login";
 import { Register } from "./register";
 import { useState } from "react";
+import { Button } from "../ui/button";
+
 
 export const DialogRegister = () => {
     const [page, setPage] = useState(1);
@@ -32,7 +34,9 @@ export const DialogRegister = () => {
     return (
         <Dialog open={modalOpen} onOpenChange={setModalOpen}>
             <DialogTrigger asChild>
+
                 <ButtonLogin openModal={openModal} />
+
             </DialogTrigger>
             <DialogContent className="w-[400px] md:w-full">
                 {page == 1 && <Login nextPage={nextPage} />}
