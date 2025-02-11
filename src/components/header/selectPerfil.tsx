@@ -1,3 +1,5 @@
+"use client"
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,12 +10,18 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ButtonPerfil } from "./buttonPerfil";
 import { LogOut, UserRound } from "lucide-react";
+import { AlertExit } from "./alertExit";
+import { useState } from "react";
 
 
 
 export const SelectPerfil = () => {
+
+    const [open, setOpen] = useState(false);
+
+
     return (
-        <DropdownMenu>
+        <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger className="outline-none">
                 <ButtonPerfil />
             </DropdownMenuTrigger>
@@ -23,8 +31,10 @@ export const SelectPerfil = () => {
                     <div className="text-[12px]">joao@gmail.com</div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="border-b"><UserRound /> Perfil</DropdownMenuItem>
-                <DropdownMenuItem className="text-red-600"><LogOut /> Sair</DropdownMenuItem>
+                <DropdownMenuItem className="border-b w-full"><UserRound /> Perfil</DropdownMenuItem>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-red-600 w-full">
+                    <AlertExit onConfirm={() => setOpen(false)} />
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
 

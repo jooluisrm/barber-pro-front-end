@@ -51,7 +51,10 @@ export const DialogAgendamento = () => {
 
                     <div className="flex gap-10 justify-between items-center">
                         <Button disabled={pageAgendamento === 1} className="rounded-full px-3 py-0" onClick={backPage}><ArrowLeft /></Button>
-                        <Progress value={pageAgendamento === 1 ? 50 : 100}/>
+                        <div className="flex items-center flex-col mb-5">
+                            <p className="font-bold">{pageAgendamento === 1 ? "50%" : "100%"}</p>
+                            <Progress value={pageAgendamento === 1 ? 50 : 100} className="w-[300px]"/>
+                        </div>
                         <Button disabled={pageAgendamento === 2} className="rounded-full px-3 py-0" onClick={nextPage}><ArrowRight /></Button>
                     </div>
                 </div>
