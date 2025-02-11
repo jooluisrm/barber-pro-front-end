@@ -13,6 +13,7 @@ import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { EscolherProfissional } from "./escolherProfissional";
+import { Progress } from "../ui/progress";
 
 
 export const DialogAgendamento = () => {
@@ -48,8 +49,9 @@ export const DialogAgendamento = () => {
                         )
                     }
 
-                    <div className="flex justify-between">
+                    <div className="flex gap-10 justify-between items-center">
                         <Button disabled={pageAgendamento === 1} className="rounded-full px-3 py-0" onClick={backPage}><ArrowLeft /></Button>
+                        <Progress value={pageAgendamento === 1 ? 50 : 100}/>
                         <Button disabled={pageAgendamento === 2} className="rounded-full px-3 py-0" onClick={nextPage}><ArrowRight /></Button>
                     </div>
                 </div>
