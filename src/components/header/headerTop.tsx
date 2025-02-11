@@ -2,6 +2,7 @@ import { LiMenu } from './liMenu';
 import { ToggleTheme } from '../toggleTheme';
 import { DialogRegister } from '../LoginAndRegister/dialogRegister';
 import Link from 'next/link';
+import { ButtonPerfil } from './buttonPerfil';
 
 
 export const HeaderTop = () => {
@@ -19,6 +20,7 @@ export const HeaderTop = () => {
             <div className='flex items-center gap-5'>
                 <ToggleTheme />
                 <DialogRegister />
+                <ButtonPerfil />
             </div>
         </div>
     )
