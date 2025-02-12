@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { DialogDescription, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
@@ -7,6 +10,12 @@ type Props = {
 }
 
 export const Register = ({ backPage }: Props) => {
+
+    const [nomeCompleto, setNomeCompleto] = useState("");
+    const [celular, setCelular] = useState();
+    const [email, setEmail] = useState();
+    const [senha, setSenha] = useState();
+
     return (
         <div>
             <div className="pb-5">
@@ -21,7 +30,14 @@ export const Register = ({ backPage }: Props) => {
             <div className="flex flex-col gap-3 pb-5">
                 <div>
                     <label htmlFor="nome">Nome completo</label>
-                    <Input id="nome" placeholder="Informe Seu Nome" autoFocus />
+                    <Input
+                        type="text"
+                        id="nome"
+                        placeholder="Informe Seu Nome"
+                        autoFocus
+                        value={nomeCompleto}
+                        onChange={(e) => setNomeCompleto(e.target.value)}
+                    />
                 </div>
                 <div>
                     <label htmlFor="tel">Celular</label>
