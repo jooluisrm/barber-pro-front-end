@@ -2,14 +2,14 @@
 
 import { createContext, useState, useContext, ReactNode } from "react";
 
-interface User {
+export interface User {
     id: string;
     nome: string;
     email: string;
     token: string;
 }
 
-interface Token {
+export interface Token {
     token: string;
 }
 
