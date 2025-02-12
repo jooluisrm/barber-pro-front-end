@@ -1,9 +1,16 @@
+"use client"
+
 import { PerfilMain } from "@/components/perfil/perfilMain";
+import { LoginBlock } from "@/components/screenLogin/telaLoginBlock";
+import { useAuth } from "../../../../contexts/AuthContext";
 
 const Perfil = () => {
+
+    const { token } = useAuth();
+
     return (
         <section className="container mx-auto min-h-screen">
-            <PerfilMain />
+            {token ? <PerfilMain /> : <LoginBlock />}
         </section>
     );
 }
