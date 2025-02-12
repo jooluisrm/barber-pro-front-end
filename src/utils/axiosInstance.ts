@@ -1,3 +1,4 @@
+import { useAuth } from '@/contexts/AuthContext';
 import axios from 'axios';
 
 // Defina a URL base da sua API
@@ -13,6 +14,7 @@ const axiosInstance = axios.create({
 
 // Interceptor para adicionar o token Bearer (caso o usuário esteja autenticado)
 axiosInstance.interceptors.request.use(
+
     (config) => {
         const token = localStorage.getItem('token'); // Ou onde você armazena o token
 
