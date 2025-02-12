@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
@@ -6,33 +6,37 @@ import { DialogDescription, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { loginUser } from "@/api/auth/authService";
+import { useAuth } from "@/contexts/AuthContext";
 
 type Props = {
     nextPage: VoidFunction;
 }
 
 const LoginFormSchema = z.object({
-    email: z
-        .string()
-        .email({ message: "Por favor, insira um e-mail válido" }),
-    senha: z
-        .string()
+    email: z.string().email({ message: "Por favor, insira um e-mail válido" }),
+    senha: z.string()
         .min(6, { message: "Senha deve ter no mínimo 6 caracteres" })
-        .regex(/[a-z]/, { message: "Senha deve conter pelo menos uma letra minúscula" })
-        .regex(/[A-Z]/, { message: "Senha deve conter pelo menos uma letra maiúscula" })
-        .regex(/[0-9]/, { message: "Senha deve conter pelo menos um número" }),
-
-})
+        .regex(/[a-z]/, { message: "Deve conter uma letra minúscula" })
+        .regex(/[A-Z]/, { message: "Deve conter uma letra maiúscula" })
+        .regex(/[0-9]/, { message: "Deve conter um número" }),
+});
 
 export const Login = ({ nextPage }: Props) => {
+    const { login } = useAuth();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(LoginFormSchema)
     });
 
-    const handleRegisterForm = (data: any) => {
-
-    }
+    const handleLoginForm = async (data: any) => {
+        try {
+            const userData = await loginUser(data);
+            login(userData); // Armazena os dados no Context API
+        } catch (error: any) {
+            alert(error.message);
+        }
+    };
 
     return (
         <div>
@@ -44,29 +48,23 @@ export const Login = ({ nextPage }: Props) => {
                     Preencha os campos abaixo para fazer login.
                 </DialogDescription>
             </div>
-            <form onSubmit={handleSubmit(handleRegisterForm)} className="flex flex-col gap-3 pb-5">
+            <form onSubmit={handleSubmit(handleLoginForm)} className="flex flex-col gap-3 pb-5">
                 <div>
                     <label htmlFor="email">Email</label>
-                    <Input
-                        {...register('email')}
-                        id="email"
-                        placeholder="Digite seu e-mail..."
-                        autoFocus
-                    />
+                    <Input {...register('email')} id="email" placeholder="Digite seu e-mail..." autoFocus value={"joaoluis4633@gmail.com"}/>
                     {errors.email && <p className="text-sm text-red-600 mt-1">* {errors.email.message as string}</p>}
                 </div>
                 <div>
                     <label htmlFor="senha">Senha</label>
-                    <Input
-                    {...register('senha')}
-                        id="senha"
-                        placeholder="Digite sua senha..."
-                    />
+                    <Input {...register('senha')} id="senha" type="password" placeholder="Digite sua senha..." value={"Joao463329"}/>
                     {errors.senha && <p className="text-sm text-red-600 mt-1">* {errors.senha.message as string}</p>}
                 </div>
                 <Button type="submit" className="font-bold">Fazer Login</Button>
             </form>
-            <p className="flex justify-center gap-1"><p>Não possui uma conta?</p><button onClick={() => nextPage()} className="text-[#0072bc] font-bold cursor-pointer">Cadastre-se</button></p>
+            <p className="flex justify-center gap-1">
+                <span>Não possui uma conta?</span>
+                <button onClick={nextPage} className="text-[#0072bc] font-bold cursor-pointer">Cadastre-se</button>
+            </p>
         </div>
     );
-}
+};

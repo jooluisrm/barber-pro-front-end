@@ -1,5 +1,5 @@
+import { useAuth } from '@/contexts/AuthContext';
 import axiosInstance from '../../utils/axiosInstance';
-import { AxiosError } from 'axios'; // Importando o tipo AxiosError
 
 export interface RegisterData {
     nome: string;
@@ -17,5 +17,22 @@ export const registerUser = async (data: RegisterData) => {
             // Verificando se a resposta do erro existe e acessando de forma segura
             const errorMessage = error.response?.data?.error || 'Erro ao registrar usuário';
             alert(errorMessage);
+    }
+};
+
+export interface LoginData {
+    email: string;
+    senha: string;
+}
+
+export const loginUser = async (data: LoginData) => {
+    try {
+        const response = await axiosInstance.post('/usuario/login', data);
+        console.log("Resposta da API:", response.data); 
+
+        return response.data; // Retorna os dados diretamente
+    } catch (error: any) {
+        console.error("Erro ao fazer login:", error);
+        throw new Error(error.response?.data?.error || "Erro ao fazer login");
     }
 };

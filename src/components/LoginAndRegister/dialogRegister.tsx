@@ -8,13 +8,16 @@ import {
 import { ButtonLogin } from "./buttonLogin";
 import { Login } from "./login";
 import { Register } from "./register";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 
 export const DialogRegister = () => {
     const [page, setPage] = useState(1);
     const [modalOpen, setModalOpen] = useState(false);
+
+    const { user, token } = useAuth();
 
     const nextPage = () => {
         if (page < 2) {
@@ -30,6 +33,10 @@ export const DialogRegister = () => {
         setModalOpen(!modalOpen);
         setPage(1);
     }
+
+    useEffect(() => {
+        setModalOpen(false);
+    }, [user, token])
 
     return (
         <Dialog open={modalOpen} onOpenChange={setModalOpen}>

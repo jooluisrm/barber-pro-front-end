@@ -9,6 +9,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useAuth } from "@/contexts/AuthContext";
 import { LogOut } from "lucide-react";
 
 type Props = {
@@ -16,6 +17,9 @@ type Props = {
 }
 
 export const AlertExit = ({ onConfirm }: Props) => {
+
+    const { logout } = useAuth();
+
     return (
         <AlertDialog>
             <AlertDialogTrigger className="w-full">
@@ -33,7 +37,7 @@ export const AlertExit = ({ onConfirm }: Props) => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction onClick={onConfirm} className="font-bold">Sair</AlertDialogAction>
+                    <AlertDialogAction onClick={() => {onConfirm(); logout()}} className="font-bold">Sair</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
     DropdownMenu,
@@ -7,19 +7,19 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { ButtonPerfil } from "./buttonPerfil";
-import { LogOut, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import { AlertExit } from "./alertExit";
-import { useState } from "react";
-
-
+import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const SelectPerfil = () => {
-
     const [open, setOpen] = useState(false);
 
+    const { user, token } = useAuth();
 
+    if(token)
     return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger className="outline-none">
@@ -27,8 +27,10 @@ export const SelectPerfil = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuLabel>
-                    <div className="max-w-[120px] text-md overflow-hidden text-nowrap">João Luís Rodrigues de Moura</div>
-                    <div className="text-[12px]">joao@gmail.com</div>
+                    <div className="max-w-[120px] text-md overflow-hidden text-nowrap">
+                        {user?.nome}
+                    </div>
+                    <div className="text-[12px]">{user?.email}</div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="border-b w-full"><UserRound /> Perfil</DropdownMenuItem>
@@ -37,6 +39,5 @@ export const SelectPerfil = () => {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-
     );
-}
+};
