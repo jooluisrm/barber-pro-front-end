@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterData, registerUser } from "@/api/auth/authService";
+import { toast } from "sonner";
 
 type Props = {
     backPage: VoidFunction;

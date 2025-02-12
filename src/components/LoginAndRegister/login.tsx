@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { loginUser } from "@/api/auth/authService";
 import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 type Props = {
     nextPage: VoidFunction;
@@ -33,8 +34,21 @@ export const Login = ({ nextPage }: Props) => {
         try {
             const userData = await loginUser(data);
             login(userData); // Armazena os dados no Context API
+
+            toast(userData.message, {
+                action: {
+                    label: "Fechar",
+                    onClick: () => console.log("Undo")
+                }
+            })
+
         } catch (error: any) {
-            alert(error.message);
+            toast(error.message, {
+                action: {
+                    label: "Fechar",
+                    onClick: () => console.log("Undo")
+                }
+            })
         }
     };
 
@@ -51,12 +65,12 @@ export const Login = ({ nextPage }: Props) => {
             <form onSubmit={handleSubmit(handleLoginForm)} className="flex flex-col gap-3 pb-5">
                 <div>
                     <label htmlFor="email">Email</label>
-                    <Input {...register('email')} id="email" placeholder="Digite seu e-mail..." autoFocus value={"joaoluis4633@gmail.com"}/>
+                    <Input {...register('email')} id="email" placeholder="Digite seu e-mail..." autoFocus value={"joaoluis4633@gmail.com"} />
                     {errors.email && <p className="text-sm text-red-600 mt-1">* {errors.email.message as string}</p>}
                 </div>
                 <div>
                     <label htmlFor="senha">Senha</label>
-                    <Input {...register('senha')} id="senha" type="password" placeholder="Digite sua senha..." value={"Joao463329"}/>
+                    <Input {...register('senha')} id="senha" type="password" placeholder="Digite sua senha..." value={"Joao463329"} />
                     {errors.senha && <p className="text-sm text-red-600 mt-1">* {errors.senha.message as string}</p>}
                 </div>
                 <Button type="submit" className="font-bold">Fazer Login</Button>

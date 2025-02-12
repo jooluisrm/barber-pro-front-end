@@ -1,5 +1,6 @@
 import { useAuth } from '@/contexts/AuthContext';
 import axiosInstance from '../../utils/axiosInstance';
+import { toast } from 'sonner';
 
 export interface RegisterData {
     nome: string;
@@ -12,11 +13,24 @@ export interface RegisterData {
 export const registerUser = async (data: RegisterData) => {
     try {
         const response = await axiosInstance.post('/usuario/register', data);
-        return alert(response.data.message); // Retorna a resposta de sucesso
+        return (
+            toast(response.data.message, {
+                action: {
+                    label: "Fechar",
+                    onClick: () => console.log("Undo")
+                }
+            })
+        ); // Retorna a resposta de sucesso
+
     } catch (error: any) {
-            // Verificando se a resposta do erro existe e acessando de forma segura
-            const errorMessage = error.response?.data?.error || 'Erro ao registrar usuário';
-            alert(errorMessage);
+        // Verificando se a resposta do erro existe e acessando de forma segura
+        const errorMessage = error.response?.data?.error || 'Erro ao registrar usuário';
+        toast(errorMessage, {
+            action: {
+                label: "Fechar",
+                onClick: () => console.log("Undo")
+            }
+        });
     }
 };
 
@@ -28,7 +42,7 @@ export interface LoginData {
 export const loginUser = async (data: LoginData) => {
     try {
         const response = await axiosInstance.post('/usuario/login', data);
-        console.log("Resposta da API:", response.data); 
+        console.log("Resposta da API:", response.data);
 
         return response.data; // Retorna os dados diretamente
     } catch (error: any) {

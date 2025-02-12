@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { MenuMobile } from "@/components/menuMobile/menuMobile";
 import { Footer } from "@/components/footer/footer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { Toaster } from "@/components/ui/sonner";
 
 type Props = {
     children: ReactNode;
@@ -36,6 +37,7 @@ const Layout = ({ children }: Props) => {
                         <div className="w-full dark:bg-black bg-white fixed bottom-0 md:hidden z-50">
                             <MenuMobile />
                         </div>
+                        <Toaster />
                     </ThemeProvider >
                 </AuthProvider>
             </body>
