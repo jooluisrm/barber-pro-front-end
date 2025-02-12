@@ -65,7 +65,7 @@ export const Login = ({ nextPage }: Props) => {
             <form onSubmit={handleSubmit(handleLoginForm)} className="flex flex-col gap-3 pb-5">
                 <div>
                     <label htmlFor="email">Email</label>
-                    <Input {...register('email')} id="email" placeholder="Digite seu e-mail..." autoFocus value={"joaoluis4633@gmail.com"} />
+                    <Input {...register('email')} id="email" placeholder="Digite seu e-mail..." autoFocus value={"joaopaulo@gmail.com"} />
                     {errors.email && <p className="text-sm text-red-600 mt-1">* {errors.email.message as string}</p>}
                 </div>
                 <div>
