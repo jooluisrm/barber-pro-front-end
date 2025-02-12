@@ -79,7 +79,7 @@ export const Register = ({ backPage }: Props) => {
                     <Input
                         {...register('telefone')}
                         id="tel"
-                        placeholder="Digite Seu Numero"
+                        placeholder="ex: (XX) XXXXX-XXXX"
                     />
                     {errors.telefone && <p className="text-sm text-red-600 mt-1">* {errors.telefone.message as string}</p>}
                 </div>
