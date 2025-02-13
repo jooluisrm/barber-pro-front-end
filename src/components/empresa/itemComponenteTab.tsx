@@ -4,6 +4,7 @@ import { ItemServico } from "./itemServico"; // Importando ItemServico, mas pode
 import { ItemProfissional } from "./itemProfissional";
 
 type Props = {
+    idBarbearia: string
     type: Types; // Indica se estamos lidando com "services" ou "professionals"
     inputTab: string; // O valor de input para filtrar os dados
     getTab: Servico[] | Profissional[] | null; // Dados de Servicos ou Profissionais
@@ -11,7 +12,7 @@ type Props = {
     textErroBusca: string; // Mensagem de erro quando não encontrar dados com a busca
 };
 
-export const ItemComponeteTab = ({ type, inputTab, getTab, textErroCadastro, textErroBusca }: Props) => {
+export const ItemComponeteTab = ({ type, inputTab, getTab, textErroCadastro, textErroBusca,  idBarbearia}: Props) => {
     const renderItems = (items: Servico[] | Profissional[], type: Types) => {
         if (items) {
             return items.filter((item) => 
@@ -21,7 +22,7 @@ export const ItemComponeteTab = ({ type, inputTab, getTab, textErroCadastro, tex
                     item.nome.toLowerCase().includes(inputTab.toLowerCase().trim()) // Filtrando novamente
                 ).map((item: any) => (
                     type === "services" ? (
-                        <ItemServico key={item.id} data={item} />
+                        <ItemServico key={item.id} data={item} idBarbearia={idBarbearia}/>
                     ) : (
                         <ItemProfissional key={item.id} data={item}/>
                     )

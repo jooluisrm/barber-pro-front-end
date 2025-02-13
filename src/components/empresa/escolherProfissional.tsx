@@ -2,13 +2,16 @@ import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import { ItemSelecionarProfissional } from "./itemSelecionarProfissional";
 import { AlertEscolhaProfissional } from "./alertEscolhaProfissional";
 import { ItemHorario } from "./itemHorario";
+import { useEffect } from "react";
+import { Profissional } from "@/types/type";
 
 type Props = {
     date: Date | undefined;
     setDate: any;
+    getProfissionais: Profissional[] | null,
 }
 
-export const EscolherProfissional = ({ date, setDate }: Props) => {
+export const EscolherProfissional = ({ date, setDate, getProfissionais }: Props) => {
     return (
         <>
             <DialogHeader>
@@ -19,7 +22,9 @@ export const EscolherProfissional = ({ date, setDate }: Props) => {
                 <DialogDescription>Selecione um profissional para continuar!</DialogDescription>
             </DialogHeader>
             <div className="flex gap-5 py-5 mb-5 flex-wrap border-b-4">
-                <ItemSelecionarProfissional />
+                {getProfissionais && getProfissionais.map((item: Profissional) => (
+                    <ItemSelecionarProfissional key={item.id} data={item}/>
+                ))}
             </div>
             <div className="pb-5">
                 <AlertEscolhaProfissional />

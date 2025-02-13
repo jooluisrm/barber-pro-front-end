@@ -5,10 +5,11 @@ import { DialogAgendamento } from "./dialogAgendamento";
 import { Servico } from "@/types/type";
 
 type Props = {
-    data: Servico
+    data: Servico;
+    idBarbearia: string;
 }
 
-export const ItemServico = ({ data }: Props) => {
+export const ItemServico = ({ data, idBarbearia }: Props) => {
     return (
         <div className="flex items-center justify-between border-b pb-10 pt-5">
             <div className="flex items-center gap-5">
@@ -27,7 +28,7 @@ export const ItemServico = ({ data }: Props) => {
                 <span className="text-sm font-bold">{data.duracao} min</span>
             </div>
             <div>
-                <DialogAgendamento />
+                <DialogAgendamento idBarbearia={`${idBarbearia}`}/>
             </div>
         </div>
     );

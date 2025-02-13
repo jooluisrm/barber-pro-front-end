@@ -74,6 +74,7 @@ export const TabLayout = ({ text, type, id }: Props) => {
 
                 {type === "services" && (
                     <ItemComponeteTab
+                        idBarbearia={`${id}`}
                         type="services" // Ou "professionals"
                         inputTab={inputServicos} // O valor de busca que o usuário digitou
                         getTab={getServicos} // O estado com os dados dos serviços ou profissionais
@@ -83,7 +84,8 @@ export const TabLayout = ({ text, type, id }: Props) => {
                 )}
 
                 {type === "profissionais" && (
-                    <ItemComponeteTab 
+                    <ItemComponeteTab
+                        idBarbearia={`${id}`}
                         type="profissionais"
                         inputTab={inputProfissionais}
                         getTab={getProfissionais}
