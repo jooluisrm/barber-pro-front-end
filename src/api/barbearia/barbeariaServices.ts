@@ -11,3 +11,14 @@ export const buscarBarbeariasProximas = async (latitude: number, longitude: numb
         throw new Error(error.response?.data?.error || "Erro ao buscar barbearias próximas");
     }
 };
+
+export const getBarbeariaNome = async (nome: string) => {
+    try {
+        const response = await axiosInstance.get(`/barbearia/${nome}`);
+        return response.data;
+    } catch (error: any) {
+        console.error("Erro ao achar barbearias:", error);
+        throw new Error(error.response?.data?.error || "Erro ao achar barbearias");
+    }
+};
+

@@ -2,10 +2,10 @@ import { Phone, Send, Smartphone } from "lucide-react";
 import { ItemDiaAtendimento } from "./itemDiaAtendimento";
 import { ItemPagamento } from "./itemPagamento";
 import { ItemRedesSociais } from "./itemRedesSociais";
-import { Barbearia } from "@/types/type";
+import { BarbeariaProps } from "@/types/type";
 
 type Props = {
-    data: Barbearia | null;
+    data: BarbeariaProps | null;
 }
 
 export const EmpresaSection2 = ({ data }: Props) => {
@@ -54,7 +54,7 @@ export const EmpresaSection2 = ({ data }: Props) => {
                 <h3 className="font-bold pb-5">Contato</h3>
                 <div>
                     <div className="flex flex-col gap-5">
-                        <div className="bg-[#F4F4F5] dark:bg-[#27272A] p-3 rounded-full flex gap-5 max-w-52"><Smartphone /><span className="text-gray-500 dark:text-white">{data?.telefone}</span></div>
+                        <div className="bg-[#F4F4F5] dark:bg-[#27272A] p-3 rounded-full flex gap-5 max-w-52"><Smartphone /><span className="text-gray-500 dark:text-white">{data?.celular}</span></div>
                         <div className="bg-[#F4F4F5] dark:bg-[#27272A] p-3 rounded-full flex gap-5 max-w-52"><Phone /><span className="text-gray-500 dark:text-white">{data?.telefone}</span></div>
                     </div>
                 </div>

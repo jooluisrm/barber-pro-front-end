@@ -5,10 +5,10 @@ import iconBarber from "../../../public/assets/barberProIcon.png";
 import wallpaperLight from "../../../public/assets/appBarberWallpeaperLight.png";
 import wallpaperDark from "../../../public/assets/appBarberWallpeaper.png";
 import { EmpresaTabs } from "./empresaTabs";
-import { Barbearia } from "@/types/type";
+import { BarbeariaProps } from "@/types/type";
 
 type Props = {
-    data: Barbearia | null;
+    data: BarbeariaProps | null;
 }
 
 export const EmpresaSection1 = ({ data }: Props) => {
