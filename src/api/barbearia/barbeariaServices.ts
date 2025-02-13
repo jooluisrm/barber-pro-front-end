@@ -22,3 +22,12 @@ export const getBarbeariaNome = async (nome: string) => {
     }
 };
 
+export const getBarbeariaServico = async (id: string) => {
+    try {
+        const response = await axiosInstance.get(`/barbearia/${id}/servicos`);
+        console.log(response.data);
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.error || "Erro ao achar serviço");
+    }
+}

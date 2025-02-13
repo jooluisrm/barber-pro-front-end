@@ -17,3 +17,11 @@ export interface BarbeariaResponse {
     data?: BarbeariaProps;
     error?: string;
 }
+
+export type Servico = {
+    id: string;
+    barbeariaId: string;
+    nome: string;
+    duracao: number;
+    preco?: string; // Pode ser ajustado para `Decimal` ou `number` dependendo do seu uso no banco de dados
+  };

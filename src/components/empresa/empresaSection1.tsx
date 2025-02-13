@@ -33,7 +33,7 @@ export const EmpresaSection1 = ({ data }: Props) => {
             </div>
             <Image alt="" src={wallpaperLight} className="dark:hidden rounded-md" />
             <Image alt="" src={wallpaperDark} className="hidden dark:flex rounded-md" />
-            <EmpresaTabs />
+            <EmpresaTabs id={data?.id}/>
         </section>
     );
 }
