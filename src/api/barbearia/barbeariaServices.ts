@@ -17,8 +17,8 @@ export const getBarbeariaNome = async (nome: string) => {
         const response = await axiosInstance.get(`/barbearia/${nome}`);
         return response.data;
     } catch (error: any) {
-        console.error("Erro ao achar barbearias:", error);
-        throw new Error(error.response?.data?.error || "Erro ao achar barbearias");
+        console.error("Erro ao encontrar barbearias:", error);
+        throw new Error(error.response?.data?.error || "Erro ao encontrar barbearias");
     }
 };
 
@@ -28,6 +28,16 @@ export const getBarbeariaServico = async (id: string) => {
         console.log(response.data);
         return response.data;
     } catch (error: any) {
-        throw new Error(error.response?.data?.error || "Erro ao achar serviço");
+        throw new Error(error.response?.data?.error || "Erro ao encontrar serviço");
+    }
+}
+
+export const getBarbeariaProfissionais = async (id: string) => {
+    try {
+        const response = await axiosInstance.get(`/barbearia/${id}/profissionais`);
+        console.log(response.data);
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.error || "Erro ao encontrar barbeiro");
     }
 }

@@ -17,7 +17,7 @@ export const ItemServico = ({ data }: Props) => {
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div>
-                    <h3 className="font-bold min-w-60">{data.nome}</h3>
+                    <h3 className="font-bold sm:min-w-60">{data.nome}</h3>
                     <p className="text-sm text-green-700 font-bold">{data.preco != null ? `R$ ${data.preco}` : "R$ Consultar"}</p>
                 </div>
             </div>

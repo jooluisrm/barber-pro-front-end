@@ -9,8 +9,9 @@ import { ItemAvaliacao } from "./itemAvaliacao";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
-import { getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
-import { Servico } from "@/types/type";
+import { getBarbeariaProfissionais, getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
+import { Profissional, Servico } from "@/types/type";
+import { PesquisarItem } from "./inputPesquisarItem";
 
 type Props = {
     text: string;
@@ -23,23 +24,39 @@ export const TabLayout = ({ text, type, id }: Props) => {
     const [getServicos, setServicos] = useState<Servico[] | null>(null);
     const [inputServicos, setInputServicos] = useState("");
 
+    const [getProfissionais, setProfissionais] = useState<Profissional[] | null>(null);
+    const [inputProfissionais, setInputProfissionais] = useState("");
+
     useEffect(() => {
         const carregarServicos = async () => {
             try {
-                if (id) {
+                if (id && type === "services") {
                     const data = await getBarbeariaServico(id);
-                    if (data)
-                        setServicos(data);
-                    console.log(data)
-
+                    if (data) setServicos(data);
                 }
             } catch (error) {
                 console.log(error);
             }
+        };
 
-        }
+        const carregarBarbeiro = async () => {
+            try {
+                if (id && type === "profissionais") {
+                    const data = await getBarbeariaProfissionais(id);
+                    if (data) {
+                        setProfissionais(data);
+                        console.log(data);  // Verifique no console se o array de profissionais está correto
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        carregarBarbeiro();
         carregarServicos();
-    }, [id])
+    }, [id]);
+
 
 
     return (
@@ -47,26 +64,17 @@ export const TabLayout = ({ text, type, id }: Props) => {
             <div>
                 <h3 className="text-2xl">{text}</h3>
             </div>
-            {
-                type === "services" && (
-                    <div className="flex items-center ">
-                        <Search className="absolute ml-3" size={20} />
-                        <Input
-                            className="pl-10 h-14"
-                            placeholder="Pesquisar"
-                            value={inputServicos}
-                            onChange={(e) => setInputServicos(e.target.value)}
-                        />
-                    </div>
-                )
-            }
+            {type === "services" && <PesquisarItem getInput={inputServicos} setInput={setInputServicos} />}
+            {type === "profissionais" && <PesquisarItem getInput={inputProfissionais} setInput={setInputProfissionais} />}
             <div>
                 {
-                    type === "services" && !inputServicos ? <div>
-                        {getServicos ? getServicos.map((item: Servico) => (
-                            <ItemServico key={item.id} data={item} />
-                        )) : <p className="text-gray-500">Servição não cadastrado</p>}
-                    </div>
+                    type === "services" && !inputServicos ? (
+                        <div>
+                            {getServicos ? getServicos.map((item: Servico) => (
+                                <ItemServico key={item.id} data={item} />
+                            )) : <p className="text-gray-500">Servição não cadastrado</p>}
+                        </div>
+                    )
                         :
                         <div>
                             {
@@ -87,13 +95,36 @@ export const TabLayout = ({ text, type, id }: Props) => {
                         </div>
                 }
                 {
-                    type === "profissionais" && <>
-                        <ItemProfissional />
-                        <ItemProfissional />
-                        <ItemProfissional />
-                        <ItemProfissional />
-                    </>
+                    type === "profissionais" && !inputProfissionais ? (
+                        <div>
+                            {getProfissionais && getProfissionais.length > 0 ? (
+                                getProfissionais.map((item: Profissional) => (
+                                    <ItemProfissional key={item.id} data={item} />
+                                ))
+                            ) : (
+                                <p className="text-gray-500">Profissionais não cadastrados</p>
+                            )}
+                        </div>
+                    ) :
+                        <div>
+                            {
+                                getProfissionais && getProfissionais.filter((item: Profissional) =>
+                                    item.nome.toLowerCase().includes(inputProfissionais.toLowerCase().trim())
+                                ).length > 0 ? (
+                                    getProfissionais.filter((item: Profissional) =>
+                                        item.nome.toLowerCase().includes(inputProfissionais.toLowerCase().trim())
+                                    ).map((item: Profissional) => (
+                                        <ItemProfissional key={item.id} data={item} />
+                                    ))
+                                ) : (
+                                    inputServicos.length > 0 && (
+                                        <p className="text-gray-500">Profissional não encontrado</p>
+                                    )
+                                )
+                            }
+                        </div>
                 }
+
                 {
                     type === "products" && <>
                         <ItemProduto />

@@ -24,4 +24,14 @@ export type Servico = {
     nome: string;
     duracao: number;
     preco?: string; // Pode ser ajustado para `Decimal` ou `number` dependendo do seu uso no banco de dados
-  };
+};
+
+export type Profissional = {
+    id: string;
+    barbeariaId: string;
+    nome: string;
+    email: string;
+    senha: string;
+    telefone: string;
+    fotoPerfil?: string;
+};
