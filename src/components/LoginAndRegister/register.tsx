@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterData, registerUser } from "@/api/auth/authService";
 import { toast } from "sonner";
+import ReactInputMask from "react-input-mask";
 
 type Props = {
     backPage: VoidFunction;
@@ -17,21 +18,24 @@ type Props = {
 const RegisterFormSchema = z.object({
     nome: z
         .string()
-        .min(4, { message: "Nome completo deve ter pelo menos 4 caracteres" }),
-    
+        .min(4, { message: "Nome completo deve ter pelo menos 4 caracteres" })
+        .regex(/^[A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]+(?: [A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]+)+$/, {
+            message: "Cada nome deve começar com letra maiúscula (ex: João Silva)"
+        }),
+
     email: z
         .string()
         .email({ message: "Por favor, insira um e-mail válido" }),
-    
+
     senha: z
         .string()
         .min(6, { message: "Senha deve ter no mínimo 6 caracteres" })
         .regex(/[a-z]/, { message: "Senha deve conter pelo menos uma letra minúscula" })
         .regex(/[A-Z]/, { message: "Senha deve conter pelo menos uma letra maiúscula" })
         .regex(/[0-9]/, { message: "Senha deve conter pelo menos um número" }),
-        
-    
-        telefone: z
+
+
+    telefone: z
         .string()
         .min(11, { message: "Número de celular inválido" })
         .regex(/^\(\d{2}\) \d{5}-\d{4}$/, { message: "Formato de celular inválido, use (XX) XXXXX-XXXX" }) // Máscara para celular
@@ -46,8 +50,8 @@ export const Register = ({ backPage }: Props) => {
     });
 
     const handleRegisterForm = (data: any) => {
-        const {nome, email, senha, telefone} = data;
-        registerUser({nome, email, senha, telefone});
+        const { nome, email, senha, telefone } = data;
+        registerUser({ nome, email, senha, telefone });
     }
 
     return (
@@ -77,11 +81,13 @@ export const Register = ({ backPage }: Props) => {
                 </div>
                 <div>
                     <label htmlFor="tel">Celular</label>
-                    <Input
-                        {...register('telefone')}
-                        id="tel"
+                    <ReactInputMask
+                        mask="(99) 99999-9999"
                         placeholder="ex: (XX) XXXXX-XXXX"
-                    />
+                        {...register("telefone")}
+                    >
+                        {(inputProps) => <Input id="tel" {...inputProps} />}
+                    </ReactInputMask>
                     {errors.telefone && <p className="text-sm text-red-600 mt-1">* {errors.telefone.message as string}</p>}
                 </div>
                 <div>

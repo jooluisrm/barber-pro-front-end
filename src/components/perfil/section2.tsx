@@ -9,11 +9,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import ReactInputMask from "react-input-mask";
 
 const EditProfileFormSchema = z.object({
     nome: z
         .string()
-        .min(4, { message: "Nome completo deve ter pelo menos 4 caracteres" }),
+        .min(4, { message: "Nome completo deve ter pelo menos 4 caracteres" })
+        .regex(/^[A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]+(?: [A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]+)+$/, {
+            message: "Cada nome deve começar com letra maiúscula (ex: João Silva)"
+        }),
 
     email: z
         .string()
@@ -71,7 +75,6 @@ export const Section2 = () => {
                 }
             })
         }
-
     };
 
     return (
@@ -89,7 +92,14 @@ export const Section2 = () => {
                 </label>
                 <label htmlFor="telefone">
                     Celular
-                    <Input id="telefone" {...register('telefone')} value={getTelefone} onChange={(e) => setTelefone(e.target.value)} />
+                    <ReactInputMask
+                        mask="(99) 99999-9999"
+                        value={getTelefone}
+                        {...register("telefone")}
+                        onChange={(e) => setTelefone(e.target.value)}
+                    >
+                        {(inputProps: any) => <Input id="telefone" {...inputProps} />}
+                    </ReactInputMask>
                     {errors.telefone && <p className="text-sm text-red-600 mt-1">* {errors.telefone.message as string}</p>}
                 </label>
                 <Button type="submit">Salvar</Button>
