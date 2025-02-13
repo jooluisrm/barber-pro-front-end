@@ -21,16 +21,17 @@ type Props = {
 export const TabLayout = ({ text, type, id }: Props) => {
 
     const [getServicos, setServicos] = useState<Servico[] | null>(null);
+    const [inputServicos, setInputServicos] = useState("");
 
     useEffect(() => {
         const carregarServicos = async () => {
             try {
                 if (id) {
                     const data = await getBarbeariaServico(id);
-                    if (data) 
+                    if (data)
                         setServicos(data);
-                        console.log(data)
-                    
+                    console.log(data)
+
                 }
             } catch (error) {
                 console.log(error);
@@ -46,17 +47,44 @@ export const TabLayout = ({ text, type, id }: Props) => {
             <div>
                 <h3 className="text-2xl">{text}</h3>
             </div>
-            <div className="flex items-center ">
-                <Search className="absolute ml-3" size={20} />
-                <Input className="pl-10 h-14" placeholder="Pesquisar" />
-            </div>
+            {
+                type === "services" && (
+                    <div className="flex items-center ">
+                        <Search className="absolute ml-3" size={20} />
+                        <Input
+                            className="pl-10 h-14"
+                            placeholder="Pesquisar"
+                            value={inputServicos}
+                            onChange={(e) => setInputServicos(e.target.value)}
+                        />
+                    </div>
+                )
+            }
             <div>
                 {
-                    type === "services" && <div>
-                        {getServicos && getServicos.map((item: Servico) => (
-                            <ItemServico key={item.id} data={item}/>
-                        ))}
+                    type === "services" && !inputServicos ? <div>
+                        {getServicos ? getServicos.map((item: Servico) => (
+                            <ItemServico key={item.id} data={item} />
+                        )) : <p className="text-gray-500">Servição não cadastrado</p>}
                     </div>
+                        :
+                        <div>
+                            {
+                                getServicos && getServicos.filter((item: Servico) =>
+                                    item.nome.toLowerCase().includes(inputServicos.toLowerCase().trim())
+                                ).length > 0 ? (
+                                    getServicos.filter((item: Servico) =>
+                                        item.nome.toLowerCase().includes(inputServicos.toLowerCase().trim())
+                                    ).map((item: Servico) => (
+                                        <ItemServico key={item.id} data={item} />
+                                    ))
+                                ) : (
+                                    inputServicos.length > 0 && (
+                                        <p className="text-gray-500">Serviço não encontrado</p>
+                                    )
+                                )
+                            }
+                        </div>
                 }
                 {
                     type === "profissionais" && <>
