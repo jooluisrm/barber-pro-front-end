@@ -12,10 +12,14 @@ import { useEffect, useState } from "react";
 import { getBarbeariaProfissionais, getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
 import { Profissional, Servico } from "@/types/type";
 import { PesquisarItem } from "./inputPesquisarItem";
+import { ItemComponeteTab } from "./itemComponenteTab";
+
+export type Types = "services" | "products" | "profissionais" | "avaliacao";
+
 
 type Props = {
     text: string;
-    type: "services" | "products" | "profissionais" | "avaliacao";
+    type: Types;
     id?: string | undefined;
 }
 
@@ -67,63 +71,26 @@ export const TabLayout = ({ text, type, id }: Props) => {
             {type === "services" && <PesquisarItem getInput={inputServicos} setInput={setInputServicos} />}
             {type === "profissionais" && <PesquisarItem getInput={inputProfissionais} setInput={setInputProfissionais} />}
             <div>
-                {
-                    type === "services" && !inputServicos ? (
-                        <div>
-                            {getServicos ? getServicos.map((item: Servico) => (
-                                <ItemServico key={item.id} data={item} />
-                            )) : <p className="text-gray-500">Servição não cadastrado</p>}
-                        </div>
-                    )
-                        :
-                        <div>
-                            {
-                                getServicos && getServicos.filter((item: Servico) =>
-                                    item.nome.toLowerCase().includes(inputServicos.toLowerCase().trim())
-                                ).length > 0 ? (
-                                    getServicos.filter((item: Servico) =>
-                                        item.nome.toLowerCase().includes(inputServicos.toLowerCase().trim())
-                                    ).map((item: Servico) => (
-                                        <ItemServico key={item.id} data={item} />
-                                    ))
-                                ) : (
-                                    inputServicos.length > 0 && (
-                                        <p className="text-gray-500">Serviço não encontrado</p>
-                                    )
-                                )
-                            }
-                        </div>
-                }
-                {
-                    type === "profissionais" && !inputProfissionais ? (
-                        <div>
-                            {getProfissionais && getProfissionais.length > 0 ? (
-                                getProfissionais.map((item: Profissional) => (
-                                    <ItemProfissional key={item.id} data={item} />
-                                ))
-                            ) : (
-                                <p className="text-gray-500">Profissionais não cadastrados</p>
-                            )}
-                        </div>
-                    ) :
-                        <div>
-                            {
-                                getProfissionais && getProfissionais.filter((item: Profissional) =>
-                                    item.nome.toLowerCase().includes(inputProfissionais.toLowerCase().trim())
-                                ).length > 0 ? (
-                                    getProfissionais.filter((item: Profissional) =>
-                                        item.nome.toLowerCase().includes(inputProfissionais.toLowerCase().trim())
-                                    ).map((item: Profissional) => (
-                                        <ItemProfissional key={item.id} data={item} />
-                                    ))
-                                ) : (
-                                    inputServicos.length > 0 && (
-                                        <p className="text-gray-500">Profissional não encontrado</p>
-                                    )
-                                )
-                            }
-                        </div>
-                }
+
+                {type === "services" && (
+                    <ItemComponeteTab
+                        type="services" // Ou "professionals"
+                        inputTab={inputServicos} // O valor de busca que o usuário digitou
+                        getTab={getServicos} // O estado com os dados dos serviços ou profissionais
+                        textErroCadastro="Nenhum serviço cadastrado" // Mensagem quando não houver serviços
+                        textErroBusca="Nenhum serviço encontrado com esse nome" // Mensagem quando não encontrar serviços com o nome
+                    />
+                )}
+
+                {type === "profissionais" && (
+                    <ItemComponeteTab 
+                        type="profissionais"
+                        inputTab={inputProfissionais}
+                        getTab={getProfissionais}
+                        textErroCadastro="Nenhum profissional cadastrado" // Mensagem quando não houver serviços
+                        textErroBusca="Nenhum profissional encontrado com esse nome" // Mensagem quando não encontrar serviços com o nome
+                    />
+                )}
 
                 {
                     type === "products" && <>
