@@ -31,3 +31,18 @@ export const usePerfil = () => {
 
     return { perfil, loading, error };
 };
+
+export interface AtualizarPerfilData {
+    nome?: string;
+    email?: string;
+    telefone?: string;
+}
+
+export const atualizarPerfil = async (dados: AtualizarPerfilData) => {
+    try {
+        const response = await axiosInstance.patch("/usuario/perfil", dados);
+        return response.data; // Retorna os dados atualizados
+    } catch (error: any) {
+        throw error.response?.data?.error;
+    }
+};
