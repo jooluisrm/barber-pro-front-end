@@ -41,3 +41,19 @@ export const getBarbeariaProfissionais = async (id: string) => {
         throw new Error(error.response?.data?.error || "Erro ao encontrar barbeiro");
     }
 }
+
+export const getBarbeariaProdutos = async (id: string) => {
+    try {
+        
+    } catch (error: any) {
+        
+    }
+}
+
+export const getBarbeariaAvaliações = async (id: string) => {
+    try {
+        
+    } catch (error: any) {
+        
+    }
+}

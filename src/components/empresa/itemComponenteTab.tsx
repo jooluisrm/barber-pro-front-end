@@ -10,9 +10,10 @@ type Props = {
     getTab: Servico[] | Profissional[] | null; // Dados de Servicos ou Profissionais
     textErroCadastro: string; // Mensagem de erro quando não encontrar dados cadastrados
     textErroBusca: string; // Mensagem de erro quando não encontrar dados com a busca
+    loading: boolean;
 };
 
-export const ItemComponeteTab = ({ type, inputTab, getTab, textErroCadastro, textErroBusca,  idBarbearia}: Props) => {
+export const ItemComponeteTab = ({ type, inputTab, getTab, textErroCadastro, textErroBusca,  idBarbearia, loading}: Props) => {
     const renderItems = (items: Servico[] | Profissional[], type: Types) => {
         if (items) {
             return items.filter((item) => 
@@ -33,7 +34,7 @@ export const ItemComponeteTab = ({ type, inputTab, getTab, textErroCadastro, tex
                 )
             );
         } else {
-            return <p className="text-gray-500">{textErroCadastro}</p>; // Mensagem caso não tenha itens cadastrados
+            return <p className={`text-gray-500 ${loading ? "hidden" : "flex"}`}>{textErroCadastro}</p>; // Mensagem caso não tenha itens cadastrados
         }
     };
 

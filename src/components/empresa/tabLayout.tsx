@@ -24,6 +24,7 @@ type Props = {
 }
 
 export const TabLayout = ({ text, type, id }: Props) => {
+    const [loading, setLoading] = useState(false);
 
     const [getServicos, setServicos] = useState<Servico[] | null>(null);
     const [inputServicos, setInputServicos] = useState("");
@@ -33,27 +34,33 @@ export const TabLayout = ({ text, type, id }: Props) => {
 
     useEffect(() => {
         const carregarServicos = async () => {
+            setLoading(true);
             try {
                 if (id && type === "services") {
                     const data = await getBarbeariaServico(id);
                     if (data) setServicos(data);
+                    setLoading(false);
                 }
             } catch (error) {
                 console.log(error);
+                setLoading(false);
             }
         };
 
         const carregarBarbeiro = async () => {
+            setLoading(true);
             try {
                 if (id && type === "profissionais") {
                     const data = await getBarbeariaProfissionais(id);
                     if (data) {
                         setProfissionais(data);
-                        console.log(data);  // Verifique no console se o array de profissionais está correto
+                        console.log(data); // Verifique no console se o array de profissionais está correto
+                        setLoading(false); 
                     }
                 }
             } catch (error) {
                 console.log(error);
+                setLoading(false); 
             }
         };
 
@@ -80,6 +87,7 @@ export const TabLayout = ({ text, type, id }: Props) => {
                         getTab={getServicos} // O estado com os dados dos serviços ou profissionais
                         textErroCadastro="Nenhum serviço cadastrado" // Mensagem quando não houver serviços
                         textErroBusca="Nenhum serviço encontrado com esse nome" // Mensagem quando não encontrar serviços com o nome
+                        loading={loading}
                     />
                 )}
 
@@ -91,6 +99,7 @@ export const TabLayout = ({ text, type, id }: Props) => {
                         getTab={getProfissionais}
                         textErroCadastro="Nenhum profissional cadastrado" // Mensagem quando não houver serviços
                         textErroBusca="Nenhum profissional encontrado com esse nome" // Mensagem quando não encontrar serviços com o nome
+                        loading={loading}
                     />
                 )}
 
@@ -110,6 +119,7 @@ export const TabLayout = ({ text, type, id }: Props) => {
                         <ItemAvaliacao />
                     </>
                 }
+                {loading && <p className="animate-pulse text-center dark:text-gray-400">Carregando...</p>}
             </div>
             {
                 type === "avaliacao" && <>
