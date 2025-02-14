@@ -51,7 +51,7 @@ export const getBarbeariaProdutos = async (id: string) => {
     }
 }
 
-export const getBarbeariaAvaliações = async (id: string) => {
+export const getBarbeariaAvaliacoes = async (id: string) => {
     try {
         const response = await axiosInstance.get(`/barbearia/${id}/avaliacoes`);
         return response.data
@@ -59,3 +59,19 @@ export const getBarbeariaAvaliações = async (id: string) => {
         throw new Error(error.response?.data?.error || "Erro ao encontrar avaliações");
     }
 }
+
+
+export const postBarbeariaAvaliacao = async (barbeariaId: string, usuarioId: string, nota: number, comentario?: string) => {
+    try {
+        const response = await axiosInstance.post(`/barbearia/${barbeariaId}/avaliacoes`, {
+            usuarioId,
+            nota,
+            comentario,
+        });
+
+        return response.data; // Retorna a resposta da API
+    } catch (error: any) {
+        console.error("Erro ao postar avaliação:", error.response?.data || error.message);
+        throw new Error(error.response?.data?.error || "Erro ao postar avaliação.");
+    }
+};

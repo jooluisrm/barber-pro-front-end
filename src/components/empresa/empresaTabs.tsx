@@ -14,7 +14,7 @@ export const EmpresaTabs = ({ id }: Props) => {
                 <TabsTrigger value="prudutos">Produtos</TabsTrigger>
                 <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
             </TabsList>
-            <TabsContent value="servicos">
+            <TabsContent value="servicos" >
                 <TabLayout text="Serviços" type="services" id={id}/>
             </TabsContent>
             <TabsContent value="profissionais">

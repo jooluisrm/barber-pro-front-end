@@ -9,10 +9,16 @@ import { ItemAvaliacao } from "./itemAvaliacao";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
-import { getBarbeariaAvaliações, getBarbeariaProdutos, getBarbeariaProfissionais, getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
+import { getBarbeariaAvaliacoes, getBarbeariaProdutos, getBarbeariaProfissionais, getBarbeariaServico, postBarbeariaAvaliacao } from "@/api/barbearia/barbeariaServices";
 import { Avaliacao, Produto, Profissional, Servico } from "@/types/type";
 import { PesquisarItem } from "./inputPesquisarItem";
 import { ItemComponeteTab } from "./itemComponenteTab";
+import { useAuth } from "@/contexts/AuthContext";
+import { StarIcon } from "./starIcon";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export type Types = "services" | "products" | "profissionais" | "avaliacao";
 
@@ -23,7 +29,18 @@ type Props = {
     id?: string | undefined;
 }
 
+const RegisterFormSchema = z.object({
+    comentario: z.string().max(160, { message: "Maximo de caracteres atingido (160)" }).optional()
+});
+
 export const TabLayout = ({ text, type, id }: Props) => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(RegisterFormSchema)
+    });
+
+    const { user } = useAuth();
+
     const [loading, setLoading] = useState(false);
 
     const [getServicos, setServicos] = useState<Servico[] | null>(null);
@@ -37,6 +54,22 @@ export const TabLayout = ({ text, type, id }: Props) => {
 
     const [getAvaliacoes, setAvaliacoes] = useState<Avaliacao[] | null>(null);
     const [inputAvaliacoes, setInputAvaliacoes] = useState("");
+
+    const carregarAvaliacoes = async () => {
+        setLoading(true);
+        try {
+            if (id && type === "avaliacao") {
+                const data = await getBarbeariaAvaliacoes(id);
+                if (data) {
+                    setAvaliacoes(data);
+                    setLoading(false);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
         const carregarServicos = async () => {
@@ -86,28 +119,54 @@ export const TabLayout = ({ text, type, id }: Props) => {
             }
         }
 
-        const carregarAvaliacoes = async () => {
-            setLoading(true);
-            try {
-                if (id && type === "avaliacao") {
-                    const data = await getBarbeariaAvaliações(id);
-                    if (data) {
-                        setAvaliacoes(data);
-                        setLoading(false);
-                    }
-                }
-            } catch (error) {
-                console.log(error);
-                setLoading(false);
-            }
-        }
-
         carregarAvaliacoes();
         carregarProdutos();
         carregarBarbeiro();
         carregarServicos();
     }, [id]);
 
+    const [notaAvaliacao, setNotaAvaliacao] = useState<number>(0);
+    const [textarea, setTextArea] = useState("");
+
+    const avaliarEstrela = (key: number) => {
+        if (key)
+            setNotaAvaliacao(key);
+        console.log(key)
+    }
+
+    const handleAvaliarForm = async (data: any) => {
+        if (notaAvaliacao !== 0 && id && user) {
+            try {
+                const { comentario } = data;
+                await postBarbeariaAvaliacao(id, user.id, notaAvaliacao, comentario);
+    
+                toast.success("Avaliação enviada com sucesso!", {
+                    action: {
+                        label: "Fechar",
+                        onClick: () => console.log("Toast fechado"),
+                    },
+                });
+                setNotaAvaliacao(0);
+                setTextArea("");
+                carregarAvaliacoes()
+    
+            } catch (error: any) {
+                toast.error(error.message || "Erro ao enviar avaliação.", {
+                    action: {
+                        label: "Fechar",
+                        onClick: () => console.log("Toast fechado"),
+                    },
+                });
+            }
+        } else {
+            toast.warning("Selecione uma nota antes de enviar!", {
+                action: {
+                    label: "Fechar",
+                    onClick: () => console.log("Toast fechado"),
+                },
+            });
+        }
+    };
 
 
     return (
@@ -173,22 +232,29 @@ export const TabLayout = ({ text, type, id }: Props) => {
                 {loading && <p className="animate-pulse text-center dark:text-gray-400">Carregando...</p>}
             </div>
             {
-                type === "avaliacao" && <>
-                    <div className="flex flex-col gap-3">
+                type === "avaliacao" && user && <>
+                    <form onSubmit={handleSubmit(handleAvaliarForm)} className="flex flex-col gap-3">
                         <h2 className="font-bold">Avaliar estabelecimento</h2>
                         <div className="flex">
-                            <Star />
-                            <Star />
-                            <Star />
-                            <Star />
-                            <Star />
+                            {
+                                new Array(5).fill(null).map((_, index) => (
+                                    <StarIcon
+                                        type="button"
+                                        key={index}
+                                        size={25}
+                                        isFilled={index < notaAvaliacao} // Verifica se a estrela deve ser preenchida
+                                        value={index + 1} // Passa o valor da estrela
+                                        avaliarEstrela={avaliarEstrela} // Passa a função de avaliação
+                                    />
+                                ))
+                            }
                         </div>
                         <div className="flex flex-col items-end gap-5">
-                            <Textarea placeholder="Comentário" />
-                            <Button className="font-bold">Enviar Avaliação</Button>
+                            <Textarea maxLength={160} placeholder="Comentário" {...register('comentario')} value={textarea} onChange={(e) => setTextArea(e.target.value)}/>
+                            {errors.comentario && <p className="text-sm text-red-600 mt-1">* {errors.comentario.message as string}</p>}
+                            <Button type="submit" className="font-bold">Enviar Avaliação</Button>
                         </div>
-
-                    </div>
+                    </form>
                 </>
             }
         </section>
