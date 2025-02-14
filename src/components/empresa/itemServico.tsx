@@ -28,7 +28,7 @@ export const ItemServico = ({ data, idBarbearia }: Props) => {
                 <span className="text-sm font-bold">{data.duracao} min</span>
             </div>
             <div>
-                <DialogAgendamento idBarbearia={`${idBarbearia}`}/>
+                <DialogAgendamento idServico={data.id} idBarbearia={`${idBarbearia}`}/>
             </div>
         </div>
     );

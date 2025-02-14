@@ -35,3 +35,8 @@ export type Profissional = {
     telefone: string;
     fotoPerfil?: string;
 };
+
+export type Horario = {
+    hora: string;
+    id: string // Formato "HH:mm"
+  };
