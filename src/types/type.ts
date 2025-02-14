@@ -51,3 +51,11 @@ export type Produto = {
     imagemUrl?: string | null; // Pode ser null ou string
     estoque: boolean;
 };
+
+export type Avaliacao = {
+    id: string; // ID da avaliação
+    nota: number;
+    nome: string; // Nome do usuário
+    data: string; // Data da avaliação no formato ISO
+    comentario: string; // Comentário da avaliação
+};

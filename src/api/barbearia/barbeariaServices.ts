@@ -53,8 +53,9 @@ export const getBarbeariaProdutos = async (id: string) => {
 
 export const getBarbeariaAvaliações = async (id: string) => {
     try {
-        
+        const response = await axiosInstance.get(`/barbearia/${id}/avaliacoes`);
+        return response.data
     } catch (error: any) {
-        
+        throw new Error(error.response?.data?.error || "Erro ao encontrar avaliações");
     }
 }

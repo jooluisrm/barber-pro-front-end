@@ -9,8 +9,8 @@ import { ItemAvaliacao } from "./itemAvaliacao";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
-import { getBarbeariaProdutos, getBarbeariaProfissionais, getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
-import { Produto, Profissional, Servico } from "@/types/type";
+import { getBarbeariaAvaliações, getBarbeariaProdutos, getBarbeariaProfissionais, getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
+import { Avaliacao, Produto, Profissional, Servico } from "@/types/type";
 import { PesquisarItem } from "./inputPesquisarItem";
 import { ItemComponeteTab } from "./itemComponenteTab";
 
@@ -34,6 +34,9 @@ export const TabLayout = ({ text, type, id }: Props) => {
 
     const [getProdutos, setProdutos] = useState<Produto[] | null>(null);
     const [inputProdutos, setInputProdutos] = useState("");
+
+    const [getAvaliacoes, setAvaliacoes] = useState<Avaliacao[] | null>(null);
+    const [inputAvaliacoes, setInputAvaliacoes] = useState("");
 
     useEffect(() => {
         const carregarServicos = async () => {
@@ -83,6 +86,23 @@ export const TabLayout = ({ text, type, id }: Props) => {
             }
         }
 
+        const carregarAvaliacoes = async () => {
+            setLoading(true);
+            try {
+                if (id && type === "avaliacao") {
+                    const data = await getBarbeariaAvaliações(id);
+                    if (data) {
+                        setAvaliacoes(data);
+                        setLoading(false);
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+                setLoading(false);
+            }
+        }
+
+        carregarAvaliacoes();
         carregarProdutos();
         carregarBarbeiro();
         carregarServicos();
@@ -98,7 +118,7 @@ export const TabLayout = ({ text, type, id }: Props) => {
             {type === "services" && <PesquisarItem getInput={inputServicos} setInput={setInputServicos} />}
             {type === "profissionais" && <PesquisarItem getInput={inputProfissionais} setInput={setInputProfissionais} />}
             {type === "products" && <PesquisarItem getInput={inputProdutos} setInput={setInputProdutos} />}
-            <div>
+            <div className="">
 
                 {type === "services" && (
                     <ItemComponeteTab
@@ -138,12 +158,17 @@ export const TabLayout = ({ text, type, id }: Props) => {
                     )
                 }
                 {
-                    type === "avaliacao" && <>
-                        <ItemAvaliacao />
-                        <ItemAvaliacao />
-                        <ItemAvaliacao />
-                        <ItemAvaliacao />
-                    </>
+                    type === "avaliacao" && (
+                        <ItemComponeteTab
+                            idBarbearia={`${id}`}
+                            type="avaliacao"
+                            inputTab={inputAvaliacoes}
+                            getTab={getAvaliacoes}
+                            textErroCadastro="Nenhuma avaliação encontrada" // Mensagem quando não houver serviços
+                            textErroBusca="Nenhuma avaliação encontrada" // Mensagem quando não encontrar serviços com o nome
+                            loading={loading}
+                        />
+                    )
                 }
                 {loading && <p className="animate-pulse text-center dark:text-gray-400">Carregando...</p>}
             </div>

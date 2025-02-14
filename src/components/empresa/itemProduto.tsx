@@ -18,7 +18,7 @@ export const ItemProduto = ({ data }: Props) => {
                     <p className="text-sm text-green-700 font-bold">R$ {Number(data.preco).toFixed(2)}</p>
                 </div>
             </div>
-            <p className="text-sm text-gray-400">{data.descricao ? data.descricao : "Sem descrição"}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{data.descricao ? data.descricao : "Sem descrição"}</p>
         </div>
     );
 }

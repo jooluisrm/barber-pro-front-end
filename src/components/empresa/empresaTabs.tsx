@@ -24,7 +24,7 @@ export const EmpresaTabs = ({ id }: Props) => {
                 <TabLayout text="Produtos" type="products" id={id}/>
             </TabsContent>
             <TabsContent value="avaliacoes">
-                <TabLayout text="Avaliações" type="avaliacao" />
+                <TabLayout text="Avaliações" type="avaliacao" id={id}/>
             </TabsContent>
         </Tabs>
     );

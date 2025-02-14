@@ -16,7 +16,7 @@ export const ItemProfissional = ({ data }: Props) => {
             </Avatar>
             <div>
                 <h3 className="font-bold">{data.nome}</h3>
-                <p className="text-sm text-gray-400">{data.telefone}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{data.telefone}</p>
             </div>
         </div>
     );
