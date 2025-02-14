@@ -9,8 +9,8 @@ import { ItemAvaliacao } from "./itemAvaliacao";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
-import { getBarbeariaProfissionais, getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
-import { Profissional, Servico } from "@/types/type";
+import { getBarbeariaProdutos, getBarbeariaProfissionais, getBarbeariaServico } from "@/api/barbearia/barbeariaServices";
+import { Produto, Profissional, Servico } from "@/types/type";
 import { PesquisarItem } from "./inputPesquisarItem";
 import { ItemComponeteTab } from "./itemComponenteTab";
 
@@ -31,6 +31,9 @@ export const TabLayout = ({ text, type, id }: Props) => {
 
     const [getProfissionais, setProfissionais] = useState<Profissional[] | null>(null);
     const [inputProfissionais, setInputProfissionais] = useState("");
+
+    const [getProdutos, setProdutos] = useState<Produto[] | null>(null);
+    const [inputProdutos, setInputProdutos] = useState("");
 
     useEffect(() => {
         const carregarServicos = async () => {
@@ -55,15 +58,32 @@ export const TabLayout = ({ text, type, id }: Props) => {
                     if (data) {
                         setProfissionais(data);
                         console.log(data); // Verifique no console se o array de profissionais está correto
-                        setLoading(false); 
+                        setLoading(false);
                     }
                 }
             } catch (error) {
                 console.log(error);
-                setLoading(false); 
+                setLoading(false);
             }
         };
 
+        const carregarProdutos = async () => {
+            setLoading(true);
+            try {
+                if (id && type === "products") {
+                    const data = await getBarbeariaProdutos(id);
+                    if (data) {
+                        setProdutos(data);
+                        setLoading(false);
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+                setLoading(false);
+            }
+        }
+
+        carregarProdutos();
         carregarBarbeiro();
         carregarServicos();
     }, [id]);
@@ -77,6 +97,7 @@ export const TabLayout = ({ text, type, id }: Props) => {
             </div>
             {type === "services" && <PesquisarItem getInput={inputServicos} setInput={setInputServicos} />}
             {type === "profissionais" && <PesquisarItem getInput={inputProfissionais} setInput={setInputProfissionais} />}
+            {type === "products" && <PesquisarItem getInput={inputProdutos} setInput={setInputProdutos} />}
             <div>
 
                 {type === "services" && (
@@ -104,12 +125,17 @@ export const TabLayout = ({ text, type, id }: Props) => {
                 )}
 
                 {
-                    type === "products" && <>
-                        <ItemProduto />
-                        <ItemProduto />
-                        <ItemProduto />
-                        <ItemProduto />
-                    </>
+                    type === "products" && (
+                        <ItemComponeteTab
+                            idBarbearia={`${id}`}
+                            type="products"
+                            inputTab={inputProdutos}
+                            getTab={getProdutos}
+                            textErroCadastro="Nenhum produto cadastrado" // Mensagem quando não houver serviços
+                            textErroBusca="Nenhum produto encontrado com esse nome" // Mensagem quando não encontrar serviços com o nome
+                            loading={loading}
+                        />
+                    )
                 }
                 {
                     type === "avaliacao" && <>

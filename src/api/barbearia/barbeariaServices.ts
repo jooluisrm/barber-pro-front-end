@@ -44,9 +44,10 @@ export const getBarbeariaProfissionais = async (id: string) => {
 
 export const getBarbeariaProdutos = async (id: string) => {
     try {
-        
+        const response = await axiosInstance.get(`/barbearia/${id}/produtos`);
+        return response.data;
     } catch (error: any) {
-        
+        throw new Error(error.response?.data?.error || "Erro ao encontrar produtos");
     }
 }
 

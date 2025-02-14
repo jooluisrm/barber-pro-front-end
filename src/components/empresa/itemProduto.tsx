@@ -1,6 +1,11 @@
+import { Produto } from "@/types/type";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-export const ItemProduto = () => {
+type Props = {
+    data: Produto;
+}
+
+export const ItemProduto = ({ data }: Props) => {
     return (
         <div className="flex items-center justify-between border-b pb-10 pt-5">
             <div className="flex items-center gap-5">
@@ -9,11 +14,11 @@ export const ItemProduto = () => {
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div>
-                    <h3 className="font-bold">Bebida</h3>
-                    <p className="text-sm text-green-700 font-bold">R$ 3,00</p>
+                    <h3 className="font-bold">{data.nome}</h3>
+                    <p className="text-sm text-green-700 font-bold">R$ {Number(data.preco).toFixed(2)}</p>
                 </div>
             </div>
-            <p className="text-sm text-gray-400">Bebida especial para clientes</p>
+            <p className="text-sm text-gray-400">{data.descricao ? data.descricao : "Sem descrição"}</p>
         </div>
     );
 }

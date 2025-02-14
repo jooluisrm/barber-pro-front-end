@@ -39,4 +39,15 @@ export type Profissional = {
 export type Horario = {
     hora: string;
     id: string // Formato "HH:mm"
-  };
+};
+
+export type Produto = {
+    id: string;
+    barbeariaId: string;
+    nome: string;
+    descricao?: string; // Opcional
+    preco: number; // Alterado para number, já que preço é numérico
+    tipo: string;
+    imagemUrl?: string | null; // Pode ser null ou string
+    estoque: boolean;
+};
