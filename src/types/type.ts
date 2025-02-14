@@ -12,6 +12,19 @@ export interface BarbeariaProps {
     longitude: number;
     status: string;
 }
+export type Barbearia = {
+    id: string;
+    nome: string;
+    endereco: string;
+    celular: string;
+    telefone: string;
+    fotoPerfil: string | null;
+    descricao: string | null;
+    latitude: number;
+    longitude: number;
+    status: string;
+    distancia: number;
+};
 
 export interface BarbeariaResponse {
     data?: BarbeariaProps;

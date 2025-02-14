@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { HabilitarLocalizacao } from "./habilitarLocalizacao";
 import { ItemEmpresaProxima } from "./itemEmpresaProxima";
 import { SkeletonItemEmpresa } from "./SkeletonItemEmpresa";
-import { Barbearia } from "@/types/type";
 import { buscarBarbeariasProximas } from "@/api/barbearia/barbeariaServices";
+import { Barbearia } from "@/types/type";
 
 export const EmpresasProximas = () => {
     const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);

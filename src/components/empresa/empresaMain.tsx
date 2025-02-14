@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { EmpresaSection1 } from "./empresaSection1";
 import { EmpresaSection2 } from "./empresaSection2";
-import { barbearias } from "@/dadosFakes/data";
 import { useParams } from "next/navigation";
 import { getBarbeariaNome } from "@/api/barbearia/barbeariaServices";
 import { BarbeariaProps } from "@/types/type";

@@ -19,7 +19,7 @@ export const ItemServico = ({ data, idBarbearia }: Props) => {
                 </Avatar>
                 <div>
                     <h3 className="font-bold sm:min-w-60">{data.nome}</h3>
-                    <p className="text-sm text-green-700 font-bold">{data.preco != null ? `R$ ${data.preco}` : "R$ Consultar"}</p>
+                    <p className="text-sm text-green-700 font-bold">{data.preco != null ? `R$ ${Number(data.preco).toFixed(2)}` : "R$ Consultar"}</p>
                 </div>
             </div>
 
