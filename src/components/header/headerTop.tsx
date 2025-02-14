@@ -10,7 +10,7 @@ export const HeaderTop = () => {
     return (
         <div className="container px-5 md:px-0 mx-auto flex justify-between items-center">
             <div className='flex gap-10'>
-                <Link href={"/"}><div className='font-extrabold'>LOGO</div></Link>
+                <Link href={"/"}><div className='font-extrabold text-xl'>BarberPro</div></Link>
                 
                 <ul className='gap-5 hidden md:flex'>
                     <LiMenu text='Início' rota='/'/>
