@@ -4,6 +4,7 @@ import { CalendarAgendamento } from "./calendarAgendamento";
 type Props = {
     date: Date | undefined;
     setDate: any;
+    
 }
 
 export const EscolherData = ({ date, setDate }: Props) => {

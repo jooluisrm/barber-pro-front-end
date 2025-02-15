@@ -39,6 +39,8 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
     const [getProfissionais, setProfissionais] = useState<Profissional[] | null>(null);
     const [getHorarios, setHorarios] = useState<Horario[] | null>(null);
 
+    const [getProgressBarra, setProgressBarra] = useState(0);
+
     const nextPage = () => {
         if (pageAgendamento < 2) {
             setPageAgendamento(pageAgendamento + 1);
@@ -53,19 +55,60 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
 
     const backPage = () => {
         if (pageAgendamento > 1) {
+            setSelectProfissional("");
+            setSelectHorario("");
             setPageAgendamento(pageAgendamento - 1);
         } else return 0;
     }
-    const selecionarProfissional = (idProfissional: string) => {
-        if (idProfissional)
-            console.log("Profissional ID: ", idProfissional);
-        setSelectProfissional(idProfissional);
-    }
-    const selecionarHorario = (hora: string) => {
-        if (hora) {
-            setSelectHorario(hora);
+
+    const barraProgressoDate = () => {
+        if (date) {
+            return 25; // Se a data estiver selecionada, aumenta 25%
+        } else {
+            return 0; // Caso contrário, retorna 0%
         }
     }
+    
+    const calcularProgresso = () => {
+        let progresso = 0;
+    
+        // Data selecionada
+        progresso += barraProgressoDate();
+    
+        // Profissional selecionado
+        if (selectProfissional) {
+            progresso += 25;
+        }
+
+        if (pageAgendamento === 2) {
+            progresso += 25;
+        }
+    
+        // Horário selecionado
+        if (selectHorario) {
+            progresso += 25; // Aqui, a seleção do horário adiciona 50%, pois é o último item
+        }
+    
+        return progresso;
+    }
+    
+    const selecionarProfissional = (idProfissional: string) => {
+        if (idProfissional === selectProfissional) {
+            setSelectProfissional(""); // Desmarcar o profissional
+            setSelectHorario("");
+        } else {
+            setSelectProfissional(idProfissional); // Selecionar o profissional
+        }
+    };
+    
+    const selecionarHorario = (hora: string) => {
+        if (hora === selectHorario) {
+            setSelectHorario(""); // Desmarcar o horário
+        } else {
+            setSelectHorario(hora); // Selecionar o horário
+        }
+    };
+
     const fazerAgendamento = async () => {
         if (selectHorario && selectProfissional && date) {
             try {
@@ -98,7 +141,7 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
                     }
                 });
             }
-        } else  {
+        } else {
             toast("Selecione uma data, profissional e um horário", {
                 action: {
                     label: "Fechar",
@@ -120,8 +163,12 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
                 console.log(error);
             }
         }
-
     }
+
+    useEffect(() => {
+        const progresso = calcularProgresso();
+        setProgressBarra(progresso);
+    }, [date, selectHorario, selecionarProfissional, pageAgendamento]);
 
     useEffect(() => {
         const carregarBarbeiro = async () => {
@@ -142,7 +189,7 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
                 });
             }
         };
-        
+
         setHorarios(null);
         carregarHorariosProfissional();
         carregarBarbeiro();
@@ -152,7 +199,7 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
         <Dialog >
             <DialogTrigger><div className="text-white bg-[#2F2F31] p-2 rounded-md font-bold dark:bg-white dark:text-black">Agendar</div></DialogTrigger>
             <DialogContent>
-                <div>
+                <div className="transition-all">
                     {
                         pageAgendamento === 1 && (
                             <EscolherData date={date} setDate={setDate} />
@@ -174,12 +221,18 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
                     }
 
                     <div className="flex gap-10 justify-between items-center">
-                        <Button disabled={pageAgendamento === 1} className="rounded-full px-3 py-0" onClick={backPage}><ArrowLeft /></Button>
+                        <div className={`${pageAgendamento != 1 && 'hidden'}`}></div>
+                        <Button disabled={pageAgendamento === 1} className={`rounded-full px-3 py-0 ${pageAgendamento === 1 && "hidden"}`} onClick={backPage}><ArrowLeft /></Button>
                         <div className="flex items-center flex-col mb-5">
-                            <p className="font-bold">{pageAgendamento === 1 ? "50%" : "100%"}</p>
-                            <Progress value={pageAgendamento === 1 ? 50 : 100} className="w-[200px] md:w-[300px]" />
+                            <p className="font-bold">
+                                {getProgressBarra}%
+                            </p>
+                            <Progress
+                                value={getProgressBarra}
+                                className="w-[200px] md:w-[300px]"
+                            />
                         </div>
-                        <Button disabled={pageAgendamento === 2} className="rounded-full px-3 py-0" onClick={nextPage}><ArrowRight /></Button>
+                        <Button disabled={pageAgendamento === 2 || !date} className="rounded-full px-3 py-0" onClick={nextPage}><ArrowRight /></Button>
                     </div>
                 </div>
 
