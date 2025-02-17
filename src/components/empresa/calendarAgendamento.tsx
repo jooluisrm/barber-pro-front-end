@@ -24,9 +24,9 @@ export function CalendarAgendamento({ date, setDate }: Props) {
                 hoje.setHours(0, 0, 0, 0);
 
                 const isBeforeToday = date < hoje;
-                const isSunday = date.getDay() === 0; // 0 representa domingo
+                //const isSunday = date.getDay() === 0; // 0 representa domingo
 
-                return isBeforeToday || isSunday;
+                return isBeforeToday// || isSunday;
             }}
             footer={date ? (
                 <p className="font-bold pt-1">

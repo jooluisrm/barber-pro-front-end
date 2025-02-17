@@ -75,3 +75,12 @@ export const postBarbeariaAvaliacao = async (barbeariaId: string, usuarioId: str
         throw new Error(error.response?.data?.error || "Erro ao postar avaliação.");
     }
 };
+
+export const getBarbeariaHorarios = async (barbeariaId: string) => {
+    try {
+        const response = await axiosInstance.get(`/barbearia/${barbeariaId}/horarios`);
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.error || "Erro ao carregar horarios.");
+    }
+}

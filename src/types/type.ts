@@ -26,6 +26,14 @@ export type Barbearia = {
     distancia: number;
 };
 
+export type HorarioFuncionamento = {
+    id: string;
+    diaSemanaNumero: number;
+    diaSemanaNome: string;   // Ex: "Segunda", "Terça"
+    horaInicio: string;  // Ex: "09:00"
+    horaFim: string;     // Ex: "19:00"
+};
+
 export interface BarbeariaResponse {
     data?: BarbeariaProps;
     error?: string;

@@ -224,7 +224,7 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
                         <div className={`${pageAgendamento != 1 && 'hidden'}`}></div>
                         <Button disabled={pageAgendamento === 1} className={`rounded-full px-3 py-0 ${pageAgendamento === 1 && "hidden"}`} onClick={backPage}><ArrowLeft /></Button>
                         <div className="flex items-center flex-col mb-5">
-                            <p className="font-bold">
+                            <p className="font-bold text-blue-500">
                                 {getProgressBarra}%
                             </p>
                             <Progress
