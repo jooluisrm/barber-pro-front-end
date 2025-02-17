@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { EmpresaSection1 } from "./empresaSection1";
 import { EmpresaSection2 } from "./empresaSection2";
 import { useParams } from "next/navigation";
-import { getBarbeariaHorarios, getBarbeariaNome, getBarbeariaPagamentos } from "@/api/barbearia/barbeariaServices";
-import { BarbeariaProps, FormaPagamento, HorarioFuncionamento } from "@/types/type";
+import { getBarbeariaHorarios, getBarbeariaNome, getBarbeariaPagamentos, getBarbeariaRedesSociais } from "@/api/barbearia/barbeariaServices";
+import { BarbeariaProps, FormaPagamento, HorarioFuncionamento, RedeSocial } from "@/types/type";
 
 export const EmpresaMain = () => {
 
@@ -13,6 +13,7 @@ export const EmpresaMain = () => {
     const [empresa, setEmpresa] = useState<BarbeariaProps | null>(null);
     const [horarios, setHorarios] = useState<HorarioFuncionamento[] | null>(null);
     const [pagamentos, setPagamentos] = useState<FormaPagamento[] | null>(null);
+    const [redesSociais, setRedesSociais] = useState<RedeSocial[] | null>(null);
 
     useEffect(() => {
         if (nome) {
@@ -34,7 +35,6 @@ export const EmpresaMain = () => {
             const carregarHorariosBarbearia = async () => {
                 try {
                     const dados: HorarioFuncionamento[] = await getBarbeariaHorarios(empresa.id);
-                    console.log(dados);
                     setHorarios(dados);
                 } catch (error) {
                     console.log(error);
@@ -47,18 +47,28 @@ export const EmpresaMain = () => {
                 } catch (error) {
                     console.log(error);
                 }
+            };
+            const carregarRedesSociais = async () => {
+                try {
+                    const dados: RedeSocial[] = await getBarbeariaRedesSociais(empresa.id);
+                    setRedesSociais(dados);
+                    console.log(dados);
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
+            carregarRedesSociais();
             carregarFormasPagamento();
             carregarHorariosBarbearia();
         }
-    }, [empresa]); // Executa quando "empresa" for atualizado
+    }, [empresa?.id]); // Executa quando "empresa" for atualizado
 
 
     return (
         <main className="lg:flex gap-20 py-10">
             <EmpresaSection1 data={empresa} />
-            <EmpresaSection2 data={empresa} horariosBarbearia={horarios} formasPagamento={pagamentos}/>
+            <EmpresaSection2 data={empresa} horariosBarbearia={horarios} formasPagamento={pagamentos} redesSociais={redesSociais}/>
         </main>
     );
 }

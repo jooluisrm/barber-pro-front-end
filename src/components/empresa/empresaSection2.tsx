@@ -2,16 +2,17 @@ import { Phone, Send, Smartphone } from "lucide-react";
 import { ItemDiaAtendimento } from "./itemDiaAtendimento";
 import { ItemPagamento } from "./itemPagamento";
 import { ItemRedesSociais } from "./itemRedesSociais";
-import { BarbeariaProps, FormaPagamento, HorarioFuncionamento } from "@/types/type";
+import { BarbeariaProps, FormaPagamento, HorarioFuncionamento, RedeSocial } from "@/types/type";
 import Link from "next/link";
 
 type Props = {
     data: BarbeariaProps | null;
     horariosBarbearia: HorarioFuncionamento[] | null;
     formasPagamento: FormaPagamento[] | null;
+    redesSociais: RedeSocial[] | null;
 }
 
-export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento }: Props) => {
+export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento, redesSociais }: Props) => {
     return (
         <section className="flex-[2_2_0%] dark:bg-[#18181B] dark:shadow-none bg-white shadow-2xl rounded-3xl py-10 px-5 mt-10 lg:mt-0 max-h-[1155px]">
 
@@ -55,8 +56,12 @@ export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento }: Pr
             <div className="py-5">
                 <h3 className="font-bold pb-5">Redes Sociais</h3>
                 <div className="flex flex-wrap gap-5">
-                    <ItemRedesSociais />
-                    <ItemRedesSociais />
+                    {
+                        redesSociais ? redesSociais.map((item: RedeSocial) => (
+                            <ItemRedesSociais key={item.id} data={item}/>
+                        )) :
+                        <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
+                    }
                 </div>
             </div>
 

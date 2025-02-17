@@ -39,6 +39,12 @@ export type FormaPagamento = {
     tipo: string; // Tipo de pagamento (ex: "Dinheiro", "Cartão", "PIX", etc.)
 };
 
+export type RedeSocial = {
+    id: string;         // ID único da rede social
+    link: string;       // Link para o perfil ou página da rede social
+    rede: string;       // Nome da rede social (ex: "Instagram", "Facebook", etc.)
+};
+
 export interface BarbeariaResponse {
     data?: BarbeariaProps;
     error?: string;

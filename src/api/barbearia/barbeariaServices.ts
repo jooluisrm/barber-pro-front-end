@@ -93,3 +93,12 @@ export const getBarbeariaPagamentos = async (barbeariaId: string) => {
         throw new Error(error.response?.data?.error || "Erro ao carregar formas de pagamentos.");
     }
 }
+
+export const getBarbeariaRedesSociais = async (barbeariaId: string) => {
+    try {
+        const response = await axiosInstance.get(`/barbearia/${barbeariaId}/redes-sociais`);
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.error || "Erro ao carregar redes sociais");
+    }
+}
