@@ -25,7 +25,6 @@ export const EmpresaMain = () => {
                     console.log(error);
                 }
             };
-
             carregarEmpresa();
         }
     }, [nome]); // Executa apenas quando "nome" muda

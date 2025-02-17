@@ -4,6 +4,7 @@ import { ItemPagamento } from "./itemPagamento";
 import { ItemRedesSociais } from "./itemRedesSociais";
 import { BarbeariaProps, FormaPagamento, HorarioFuncionamento, RedeSocial } from "@/types/type";
 import Link from "next/link";
+import { ItemContato } from "./itemContato";
 
 type Props = {
     data: BarbeariaProps | null;
@@ -20,8 +21,8 @@ export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento, rede
                 <h3 className="font-bold">Localização</h3>
                 <div className="flex justify-between py-5">
                     <p className="max-w-72 text-gray-400 text-sm">{data?.endereco}</p>
-                    <Link 
-                        href={`https://www.google.com/maps/place/${data?.latitude},${data?.longitude}`} 
+                    <Link
+                        href={`https://www.google.com/maps/place/${data?.latitude},${data?.longitude}`}
                         target="_blank"
                         rel="noopener noreferrer">
                         <button className="dark:bg-black border dark:border-white p-3 rounded-full"><Send /></button>
@@ -34,9 +35,9 @@ export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento, rede
                 <div>
                     {
                         horariosBarbearia ? horariosBarbearia.map((item: HorarioFuncionamento) => (
-                            <ItemDiaAtendimento key={item.id} data={item}/>
+                            <ItemDiaAtendimento key={item.id} data={item} />
                         )) :
-                        <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
+                            <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
                     }
                 </div>
             </div>
@@ -46,9 +47,9 @@ export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento, rede
                 <div className="flex flex-wrap gap-5">
                     {
                         formasPagamento ? formasPagamento.map((item: FormaPagamento) => (
-                            <ItemPagamento key={item.id} data={item}/>
+                            <ItemPagamento key={item.id} data={item} />
                         )) :
-                        <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
+                            <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
                     }
                 </div>
             </div>
@@ -58,9 +59,9 @@ export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento, rede
                 <div className="flex flex-wrap gap-5">
                     {
                         redesSociais ? redesSociais.map((item: RedeSocial) => (
-                            <ItemRedesSociais key={item.id} data={item}/>
+                            <ItemRedesSociais key={item.id} data={item} />
                         )) :
-                        <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
+                            <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
                     }
                 </div>
             </div>
@@ -69,14 +70,15 @@ export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento, rede
                 <h3 className="font-bold pb-5">Contato</h3>
                 <div>
                     <div className="flex flex-col gap-5">
-                        <div className="bg-[#F4F4F5] dark:bg-[#27272A] p-3 rounded-full flex gap-5 max-w-52">
-                            <Smartphone />
-                            <span className="text-gray-500 dark:text-white">{data?.celular}</span>
-                        </div>
-                        <div className="bg-[#F4F4F5] dark:bg-[#27272A] p-3 rounded-full flex gap-5 max-w-52">
-                            <Phone />
-                            <span className="text-gray-500 dark:text-white">{data?.telefone}</span>
-                        </div>
+                        {
+                            !data?.celular && !data?.telefone && <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
+                        }
+                        {
+                            data?.celular && <ItemContato type="cel" celular={data?.celular} />
+                        }
+                        {
+                            data?.telefone && <ItemContato type="tel" telefone={data?.telefone} />
+                        }
                     </div>
                 </div>
             </div>
