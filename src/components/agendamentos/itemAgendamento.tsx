@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
 import { AgendamentoResponse } from "@/types/type";
 import { converterMes } from "@/utils/conversorMes";
+import { DialogInfoAgendamento } from "./dialogInfoAgendamento";
 
 type Props = {
     data: AgendamentoResponse;
@@ -23,12 +24,13 @@ export const ItemAgendamento = ({data}: Props) => {
 
                 <div>
                     <h3 className="text-lg">{data.barbearia.nome}</h3>
-                    <p className="text-gray-500 dark:text-gray-400 font-bold">{data.servico.nome} - {data.hora}</p>
+                    <p className="text-gray-500 dark:text-gray-400 font-bold">{data.servico.nome} - {data.hora}h</p>
+                    <DialogInfoAgendamento data={data}/>
                 </div>
 
             </div>
             <div className="text-center">
-                <div className="flex flex-col justify-center mb-5">
+                <div className="flex flex-col justify-center mb-2">
                     <p className="text-xl">{dia}</p>
                     <p className="text-sm font-bold">{mesFormatado.toUpperCase()}</p>
                 </div>
