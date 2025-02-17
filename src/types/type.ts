@@ -24,6 +24,29 @@ export type Barbearia = {
     distancia: number;
 };
 
+export type AgendamentoResponse = {
+    id: string;
+    data: string; // Formato "YYYY-MM-DD"
+    hora: string; // Formato "HH:mm"
+    status: string;
+    barbearia: {
+        id: string;
+        nome: string;
+        endereco: string;
+        celular: string;
+    };
+    barbeiro: {
+        id: string;
+        nome: string;
+    };
+    servico: {
+        id: string;
+        nome: string;
+        preco: string;
+        duracao: number;
+    };
+};
+
 export type HorarioFuncionamento = {
     id: string;
     diaSemanaNumero: number;

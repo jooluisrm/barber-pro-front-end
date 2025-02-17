@@ -46,3 +46,12 @@ export const atualizarPerfil = async (dados: AtualizarPerfilData) => {
         throw error.response?.data?.error;
     }
 };
+
+export const carregarAgendamentos = async (usuarioId: string) => {
+    try {
+        const response = await axiosInstance.get(`/agendamentos/${usuarioId}`);
+        return response.data;
+    } catch (error: any) {
+        throw error.response?.data?.error;
+    }
+}
