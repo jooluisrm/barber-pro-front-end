@@ -26,7 +26,7 @@ export const ItemDiaAtendimento = ({ data }: Props) => {
                 <h2>{data.diaSemanaNome}</h2>
                 {
                     diaSemanaHoje === data.diaSemanaNumero &&
-                    <span className="text-sm text-green-600 border-2 border-green-700 rounded-full py-1 px-2 font-bold">Hoje</span>
+                    <span className={`text-sm text-green-600 border-2 border-green-700 rounded-full py-1 px-2 font-bold`}>Hoje</span>
                 }
             </div>
             <div className="flex flex-col">

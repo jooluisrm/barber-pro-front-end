@@ -232,7 +232,8 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
                                 className="w-[200px] md:w-[300px]"
                             />
                         </div>
-                        <Button disabled={pageAgendamento === 2 || !date} className="rounded-full px-3 py-0" onClick={nextPage}><ArrowRight /></Button>
+                        <div className={`${pageAgendamento != 2 && 'hidden'}`}></div>
+                        <Button disabled={pageAgendamento === 2 || !date} className={`rounded-full px-3 py-0 ${pageAgendamento === 2 && "hidden"}`} onClick={nextPage}><ArrowRight /></Button>
                     </div>
                 </div>
 
