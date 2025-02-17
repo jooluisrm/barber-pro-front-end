@@ -11,11 +11,12 @@ type Props = {
 
 export const ItemAgendamento = ({data}: Props) => {
     
+    const hoje = new Date().getDate();
     const [ano, mes, dia] = data.data.split("-");
     const mesFormatado = converterMes(Number(mes)-1);
 
     return (
-        <div className="bg-[#F4F4F5] dark:bg-[#18181B] flex justify-between items-center rounded-2xl py-3 px-5 md:px-10">
+        <div className={`bg-[#F4F4F5] dark:bg-[#18181B] flex justify-between items-center rounded-2xl py-3 px-5 md:px-10 border ${hoje === Number(dia) ? "border-blue-500 border-2" : "border-gray-700"}`}>
             <div className="flex  items-center gap-3">
                 <Avatar className="w-16 h-16">
                     <AvatarImage src="https://github.com/shadcn.png" />
@@ -31,8 +32,8 @@ export const ItemAgendamento = ({data}: Props) => {
             </div>
             <div className="text-center">
                 <div className="flex flex-col justify-center mb-2">
-                    <p className="text-xl">{dia}</p>
-                    <p className="text-sm font-bold">{mesFormatado.toUpperCase()}</p>
+                    <p className={`text-xl font-bold ${hoje === Number(dia) && "text-blue-500"}`}>{dia}</p>
+                    <p className={`text-sm font-bold ${hoje === Number(dia) && "text-blue-500"}`}>{mesFormatado.toUpperCase()}</p>
                 </div>
                 <Button variant={"destructive"}><Trash2 /></Button>
             </div>
