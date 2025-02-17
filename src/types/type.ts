@@ -34,6 +34,11 @@ export type HorarioFuncionamento = {
     horaFim: string;     // Ex: "19:00"
 };
 
+export type FormaPagamento = {
+    id: string; // ID único da forma de pagamento
+    tipo: string; // Tipo de pagamento (ex: "Dinheiro", "Cartão", "PIX", etc.)
+};
+
 export interface BarbeariaResponse {
     data?: BarbeariaProps;
     error?: string;

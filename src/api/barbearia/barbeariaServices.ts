@@ -84,3 +84,12 @@ export const getBarbeariaHorarios = async (barbeariaId: string) => {
         throw new Error(error.response?.data?.error || "Erro ao carregar horarios.");
     }
 }
+
+export const getBarbeariaPagamentos = async (barbeariaId: string) => {
+    try {
+        const response = await axiosInstance.get(`/barbearia/${barbeariaId}/formas-pagamento`);
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.error || "Erro ao carregar formas de pagamentos.");
+    }
+}

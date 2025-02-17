@@ -2,15 +2,16 @@ import { Phone, Send, Smartphone } from "lucide-react";
 import { ItemDiaAtendimento } from "./itemDiaAtendimento";
 import { ItemPagamento } from "./itemPagamento";
 import { ItemRedesSociais } from "./itemRedesSociais";
-import { BarbeariaProps, HorarioFuncionamento } from "@/types/type";
+import { BarbeariaProps, FormaPagamento, HorarioFuncionamento } from "@/types/type";
 import Link from "next/link";
 
 type Props = {
     data: BarbeariaProps | null;
     horariosBarbearia: HorarioFuncionamento[] | null;
+    formasPagamento: FormaPagamento[] | null;
 }
 
-export const EmpresaSection2 = ({ data, horariosBarbearia }: Props) => {
+export const EmpresaSection2 = ({ data, horariosBarbearia, formasPagamento }: Props) => {
     return (
         <section className="flex-[2_2_0%] dark:bg-[#18181B] dark:shadow-none bg-white shadow-2xl rounded-3xl py-10 px-5 mt-10 lg:mt-0 max-h-[1155px]">
 
@@ -42,10 +43,12 @@ export const EmpresaSection2 = ({ data, horariosBarbearia }: Props) => {
             <div className="py-5">
                 <h3 className="font-bold pb-5">Formas de pagamento</h3>
                 <div className="flex flex-wrap gap-5">
-                    <ItemPagamento />
-                    <ItemPagamento />
-                    <ItemPagamento />
-                    <ItemPagamento />
+                    {
+                        formasPagamento ? formasPagamento.map((item: FormaPagamento) => (
+                            <ItemPagamento key={item.id} data={item}/>
+                        )) :
+                        <p className="text-gray-500 dark:text-gray-400">Sem Informação!</p>
+                    }
                 </div>
             </div>
 
