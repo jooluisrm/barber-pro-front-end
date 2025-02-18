@@ -1,6 +1,6 @@
 "use client"
 
-import { cancelarAgendamento } from "@/api/usuario/usuarioService"
+import { cancelarAgendamento, deletarRegistroAgendamento } from "@/api/usuario/usuarioService"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,19 +13,19 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { Ban, Trash2 } from "lucide-react"
+import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
 type Props = {
     idAgendamento: string;
 }
 
-export const AlertDialogCandelarAgendamento = ({ idAgendamento }: Props) => {
+export const AlertDialogDeletarAgendamento = ({ idAgendamento }: Props) => {
 
-    const handleCancelarAgendamento = async () => {
-        console.log("Cancelando agendamento com ID:", idAgendamento); // Adicione esse log
+    const handleDeletarAgendamento = async () => {
+        console.log("Deletar registro com ID:", idAgendamento); // Adicione esse log
         try {
-            const result = await cancelarAgendamento(idAgendamento);
+            const result = await deletarRegistroAgendamento(idAgendamento);
             toast(result.message, {
                 action: {
                     label: "Fechar",
@@ -33,7 +33,7 @@ export const AlertDialogCandelarAgendamento = ({ idAgendamento }: Props) => {
                 }
             })
         } catch (error: any) {
-            console.error("Erro ao cancelar agendamento:", error);
+            console.error("Erro ao deletar registro:", error);
             toast(error, {
                 action: {
                     label: "Fechar",
@@ -46,18 +46,18 @@ export const AlertDialogCandelarAgendamento = ({ idAgendamento }: Props) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button variant={"destructive"}><Ban /></Button>
+                <Button variant={"destructive"}><Trash2 /></Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Tem certeza que deseja cancelar?</AlertDialogTitle>
+                    <AlertDialogTitle>Deseja deletar registro?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Essa ação não pode ser desfeita. Seu agendamento será cancelado e o horário ficará disponível para outros clientes.
+                        Essa ação não pode ser desfeita. Seu registro será deletado e não poderar ser visto.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Voltar</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => handleCancelarAgendamento()} className="font-bold text-white bg-red-500 hover:bg-opacity-60">Confirmar</AlertDialogAction>
+                    <AlertDialogAction onClick={() => handleDeletarAgendamento()} className="font-bold text-white bg-red-500 hover:bg-opacity-60">Deletar</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

@@ -64,3 +64,12 @@ export const cancelarAgendamento = async (agendamentoId: string) => {
         throw error.response?.data?.error;
     }
 }
+
+export const deletarRegistroAgendamento = async (agendamentoId: string) => {
+    try {
+        const response = await axiosInstance.delete(`/agendamentos/${agendamentoId}`);
+        return response.data;
+    } catch (error: any) {
+        throw error.response?.data?.error;
+    }
+}
