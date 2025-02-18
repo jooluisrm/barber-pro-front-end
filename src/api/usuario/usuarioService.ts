@@ -55,3 +55,12 @@ export const carregarAgendamentos = async (usuarioId: string) => {
         throw error.response?.data?.error;
     }
 }
+
+export const cancelarAgendamento = async (agendamentoId: string) => {
+    try {
+        const response = await axiosInstance.put(`/agendamentos/${agendamentoId}/cancelar`);
+        return response.data;
+    } catch (error: any) {
+        throw error.response?.data?.error;
+    }
+}

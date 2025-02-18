@@ -31,7 +31,7 @@ export const AgendamentosMain = () => {
             };
             carregarMeusAgendamentos();
         }
-    }, [user?.id]);
+    }, [user?.id, agendamentosFiltrado]);
 
     useEffect(() => {
         if (agendamentos) {
