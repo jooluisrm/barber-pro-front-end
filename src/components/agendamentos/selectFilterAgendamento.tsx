@@ -25,7 +25,9 @@ export function SelectFilterAgendamento({ selectFilter, onChange }: Props) {
                 <SelectGroup>
                     <SelectLabel>Agendamento</SelectLabel>
                     <SelectItem value="proximo">Próximos</SelectItem>
-                    <SelectItem value="passado">Todos</SelectItem>
+                    <SelectItem value="cancelado">Cancelados</SelectItem>
+                    <SelectItem value="feito">Feito</SelectItem>
+                    <SelectItem value="todos">Todos</SelectItem>
                 </SelectGroup>
             </SelectContent>
         </Select>

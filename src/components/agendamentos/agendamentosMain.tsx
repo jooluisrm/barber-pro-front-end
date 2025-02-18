@@ -40,12 +40,24 @@ export const AgendamentosMain = () => {
 
             const agendamentosFuturos = agendamentos.filter((item: AgendamentoResponse) => {
                 const dataAgendamento = new Date(item.data + "T00:00:00"); // Garante que a string "YYYY-MM-DD" seja interpretada corretamente
-                return dataAgendamento >= dataHoje;
+                return dataAgendamento >= dataHoje && item.status === "Confirmado";
             });
 
             setAgendamentosFiltrado(agendamentosFuturos);
         }
-    }, [agendamentos]);
+        if (agendamentos && selectFilter === "cancelado") {
+            const agendamentosCancelados = agendamentos.filter((item) => {
+                return item.status === "Cancelado";
+            })
+            setAgendamentosFiltrado(agendamentosCancelados);
+        }
+        if(agendamentos && selectFilter === "feito") {
+            const agendamentosFeitos = agendamentos.filter((item) => {
+                return item.status === "Feito";
+            });
+            setAgendamentosFiltrado(agendamentosFeitos);
+        }
+    }, [agendamentos, selectFilter]);
 
     return (
         <main>
@@ -55,7 +67,7 @@ export const AgendamentosMain = () => {
             </nav>
             <div className="py-10 grid gap-5 grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
 
-                {selectFilter === "proximo" ? (
+                {selectFilter === "proximo" || selectFilter === "cancelado" || selectFilter === "feito" ? (
                     agendamentosFiltrado && agendamentosFiltrado.length > 0 ? (
                         agendamentosFiltrado.map((item: AgendamentoResponse) => (
                             <ItemAgendamento key={item.id} data={item} />
@@ -63,7 +75,7 @@ export const AgendamentosMain = () => {
                     ) : (
                         <p className="text-gray-500 dark:text-gray-400">Sem agendamentos!</p>
                     )
-                ) : selectFilter === "passado" ? (
+                ) : selectFilter === "todos" ? (
                     agendamentos && agendamentos.length > 0 ? (
                         agendamentos.map((item: AgendamentoResponse) => (
                             <ItemAgendamento key={item.id} data={item} />
@@ -74,7 +86,6 @@ export const AgendamentosMain = () => {
                 ) : (
                     <p className="text-gray-500 dark:text-gray-400">Selecione um filtro para visualizar os agendamentos.</p>
                 )}
-
             </div>
         </main>
     );
