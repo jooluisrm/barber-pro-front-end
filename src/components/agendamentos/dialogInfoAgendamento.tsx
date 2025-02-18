@@ -45,6 +45,7 @@ export function DialogInfoAgendamento({ data }: Props) {
                         <span className="font-bold text-blue-500">{hoje != Number(dia) ? `${dia}/${mes}` : "Hoje"}</span>
                         às
                         <span className="font-bold">{data.hora}h</span>
+                        {hoje > Number(dia) && <span>- <span className="text-red-500 font-bold">Data expirada</span></span>}
                     </div>
                     <div className="font-bold">
                         Status: {data.status}

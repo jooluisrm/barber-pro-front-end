@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axiosInstance"
 
-export const getHorariosValidosProfissional = async (barbeiroId: any, data: any) => {
-    const response = await axiosInstance.get(`/barbeiro/${barbeiroId}/horarios/${data}`);
+export const getHorariosValidosProfissional = async (barbeiroId: any, data: any, hora: any) => {
+    const response = await axiosInstance.get(`/barbeiro/${barbeiroId}/horarios/${data}/${hora}`);
     console.log(response.data);
     return response.data;
 }

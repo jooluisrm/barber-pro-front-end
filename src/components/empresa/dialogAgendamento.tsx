@@ -152,18 +152,22 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
     };
 
     const carregarHorariosProfissional = async () => {
-        if (selectProfissional != "") {
+        if (selectProfissional !== "") {
             try {
-                const data = await getHorariosValidosProfissional(selectProfissional, formatDate(date));
+                const dataFormatada = formatDate(date); // Formata a data corretamente
+                const horaAtual = new Date().toTimeString().slice(0, 5); // Pega o horário atual no formato HH:MM
+    
+                const data = await getHorariosValidosProfissional(selectProfissional, dataFormatada, horaAtual);
+    
                 if (data) {
                     setHorarios(data);
-                    console.log(data)
+                    console.log(data);
                 }
             } catch (error) {
                 console.log(error);
             }
         }
-    }
+    };
 
     useEffect(() => {
         const progresso = calcularProgresso();

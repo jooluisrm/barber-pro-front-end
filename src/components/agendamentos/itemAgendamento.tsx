@@ -16,7 +16,7 @@ export const ItemAgendamento = ({data}: Props) => {
     const mesFormatado = converterMes(Number(mes)-1);
 
     return (
-        <div className={`bg-[#F4F4F5] dark:bg-[#18181B] flex justify-between items-center rounded-2xl py-3 px-5 md:px-10 border ${hoje === Number(dia) ? "border-blue-500 border-2" : "border-gray-700"}`}>
+        <div className={`bg-[#F4F4F5] dark:bg-[#18181B] flex justify-between items-center rounded-2xl py-3 px-5 md:px-10 border ${hoje > Number(dia) && "border-red-500"}  ${hoje === Number(dia) ? "border-blue-500 border-2" : "border-gray-700"}`}>
             <div className="flex  items-center gap-3">
                 <Avatar className="w-16 h-16">
                     <AvatarImage src="https://github.com/shadcn.png" />
