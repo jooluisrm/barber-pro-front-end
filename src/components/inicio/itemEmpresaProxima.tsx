@@ -23,14 +23,15 @@ export const ItemEmpresaProxima = ({ data }: Props) => {
                         <div className="flex flex-col gap-1">
                             <p className="text-gray-500 dark:text-gray-400 w-44 lg:w-52  overflow-hidden text-nowrap text-sm">{data?.endereco}</p>
                             <div className="flex gap-1 items-center text-sm">
-                                <span><MapPin className="text-red-500" size={20} /></span>
-                                {data?.distancia && (
+
+                                {data?.distancia && (<>
+                                    <span><MapPin className="text-red-500" size={20} /></span>
                                     <span>
                                         {data.distancia < 1
                                             ? `${(data.distancia * 1000).toFixed(0)} m`
                                             : `${data.distancia.toFixed(2)} km`}
                                     </span>
-                                )}
+                                </>)}
                             </div>
                         </div>
                     </div>

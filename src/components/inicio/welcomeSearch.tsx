@@ -8,9 +8,11 @@ import { useAuth } from "@/contexts/AuthContext";
 
 type Props = {
     type: "search" | "button";
+    inputBuscar: string;
+    setInputBuscar: (e: string) => void;
 }
 
-export const WelcomeSearch = ({ type }: Props) => {
+export const WelcomeSearch = ({ type, inputBuscar, setInputBuscar }: Props) => {
 
 
 
@@ -48,7 +50,7 @@ export const WelcomeSearch = ({ type }: Props) => {
                 <Link href={"/buscar"}>
                     <div className="flex items-center ">
                         <Search className="absolute ml-3" size={20} />
-                        <Input className="pl-10 h-14" placeholder="Encontre um estabelecimento" />
+                        <Input className="pl-10 h-14" placeholder="Encontre um estabelecimento" value={inputBuscar} onChange={(e) => setInputBuscar(e.target.value)}/>
                     </div>
                 </Link>
 
