@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { AgendamentoResponse } from "@/types/type";
 import { converterMes } from "@/utils/conversorMes";
 import { DialogInfoAgendamento } from "./dialogInfoAgendamento";
+import { AlertDialogCandelarAgendamento } from "./alertDialogCancelarAgendamento";
 
 type Props = {
     data: AgendamentoResponse;
@@ -35,7 +36,7 @@ export const ItemAgendamento = ({data}: Props) => {
                     <p className={`text-xl font-bold ${hoje === Number(dia) && "text-blue-500"}`}>{dia}</p>
                     <p className={`text-sm font-bold ${hoje === Number(dia) && "text-blue-500"}`}>{mesFormatado.toUpperCase()}</p>
                 </div>
-                <Button variant={"destructive"}><Trash2 /></Button>
+                <AlertDialogCandelarAgendamento />
             </div>
         </div>
     );

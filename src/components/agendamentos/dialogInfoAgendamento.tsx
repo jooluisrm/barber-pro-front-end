@@ -41,8 +41,8 @@ export function DialogInfoAgendamento({ data }: Props) {
                     <div>
                         <span className="font-bold">{data.servico.nome}</span> - <span className="font-bold">{data.servico.duracao} min</span> - <span className="text-green-600 font-bold">R$ {data.servico.preco ? Number(data.servico.preco).toFixed(2) : "valor não informado!"}</span>
                     </div>
-                    <div className="flex gap-2">
-                        <span className="font-bold text-blue-500">{hoje != Number(dia) ? `${dia}/${mes}` : "Hoje"}</span>
+                    <div className={`flex gap-2 ${hoje > Number(dia) && "dark:text-gray-400 text-gray-500"}`}>
+                        <span className={`font-bold text-blue-500 ${hoje > Number(dia) && "text-gray-400 dark:text-gray-500"}`}>{hoje != Number(dia) ? `${dia}/${mes}` : "Hoje"}</span>
                         às
                         <span className="font-bold">{data.hora}h</span>
                         {hoje > Number(dia) && <span>- <span className="text-red-500 font-bold">Data expirada</span></span>}
