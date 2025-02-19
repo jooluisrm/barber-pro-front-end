@@ -16,8 +16,11 @@ export const EmpresaSection1 = ({ data }: Props) => {
         <section className="flex-[2_2_50%] lg:flex-[2_2_20%]">
             <div className="flex justify-between items-center pb-5">
                 <div className="flex items-center gap-5">
-                    <Avatar className="size-14">
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                    <Avatar className="size-24">
+                        <AvatarImage
+                            className="border-2 rounded-full dark:bg-slate-50 bg-white "
+                            src={`../assets/BarberProIcone-removebg-preview.png`}
+                        />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <div>

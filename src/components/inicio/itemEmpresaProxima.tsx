@@ -2,6 +2,7 @@ import { ChevronRight, Locate, LocateFixed, MapPin } from "lucide-react";
 import Link from "next/link";
 import { Barbearia } from "@/types/type";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import imgIcon from "../../../public/assets/BarberProIcone-removebg-preview.png";
 
 type Props = {
     data: Barbearia;
@@ -13,8 +14,11 @@ export const ItemEmpresaProxima = ({ data }: Props) => {
         <Link href={`empresa/${data?.nome}`}>
             <div className="flex justify-between items-center p-4 rounded-xl overflow-hidden max-w-[450px] border bg-[#f4f4f5] dark:bg-[#18181b] transition-all hover:scale-105 dark:hover:border-white hover:border-black">
                 <div className="flex items-center gap-3">
-                    <Avatar className="size-14">
-                        <AvatarImage className="border-2 rounded-full border-gray-500 dark:border-white" src="https://github.com/shadcn.png" />
+                    <Avatar className="size-20">
+                        <AvatarImage
+                            className="border-2 rounded-full dark:bg-slate-50 bg-white"
+                            src={`assets/BarberProIcone-removebg-preview.png`}
+                        />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
 
