@@ -111,3 +111,12 @@ export const getAllBarbearias = async () => {
         throw new Error(error.response?.data?.error || "Erro ao carregar barbearias");
     }
 }
+
+export const buscarBarbeariaPorNome = async (nome: string) => {
+    try {
+        const response = await axiosInstance.get(`/barbearia/buscar/${nome}`);
+        return response.data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.error || "Erro ao buscar barbearia");
+    }
+};

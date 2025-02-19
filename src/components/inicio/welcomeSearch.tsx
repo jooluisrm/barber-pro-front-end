@@ -30,7 +30,16 @@ export const WelcomeSearch = ({ type, inputBuscar, setInputBuscar }: Props) => {
                 </div>
                 <div className="flex items-center ">
                     <Search className="absolute ml-3" size={20} />
-                    <Input className="pl-10 h-14" placeholder="Pesquisar pelo nome" autoFocus />
+                    <Input
+                        className="pl-10 h-14"
+                        placeholder="Pesquisar pelo nome"
+                        autoFocus
+                        value={inputBuscar}
+                        onChange={(e) => {
+                            console.log(e.target.value);
+                            setInputBuscar(e.target.value);
+                        }}
+                    />
                 </div>
             </section>
         );
@@ -50,7 +59,10 @@ export const WelcomeSearch = ({ type, inputBuscar, setInputBuscar }: Props) => {
                 <Link href={"/buscar"}>
                     <div className="flex items-center ">
                         <Search className="absolute ml-3" size={20} />
-                        <Input className="pl-10 h-14" placeholder="Encontre um estabelecimento" value={inputBuscar} onChange={(e) => setInputBuscar(e.target.value)}/>
+                        <Input
+                            className="pl-10 h-14"
+                            placeholder="Encontre um estabelecimento"
+                        />
                     </div>
                 </Link>
 
