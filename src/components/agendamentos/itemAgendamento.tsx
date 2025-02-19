@@ -26,7 +26,7 @@ export const ItemAgendamento = ({ data }: Props) => {
         <div className={`bg-[#F4F4F5] dark:bg-[#18181B] flex justify-between items-center rounded-2xl py-3 px-5 md:px-10 border 
             ${data.status === "Feito" && "border-green-600"}  
             ${data.status === "Cancelado" && "border-red-500"} 
-            ${isExpirado && "border-red-500"}  // Apenas aplica o border vermelho se expirado
+            ${isExpirado && data.status != "Feito" && "border-red-500"}  // Apenas aplica o border vermelho se expirado
             ${hoje < dataAgendamento && data.status === "Confirmado" && "border-yellow-500"}  
             ${hoje === dataAgendamento ? "border-blue-500 border-2" : "border-gray-700"}`}>
             <div className="flex items-center gap-3">
