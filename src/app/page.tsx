@@ -2,7 +2,7 @@ import { InicioMain } from "@/components/inicio/inicioMain";
 
 const Home = () => {
     return (
-        <div>
+        <div className="min-h-screen">
             <InicioMain />
         </div>
     );

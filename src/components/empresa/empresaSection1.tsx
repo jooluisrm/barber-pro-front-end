@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import wallpaperLight from "../../../public/assets/appBarberWallpeaperLight.png";
-import wallpaperDark from "../../../public/assets/appBarberWallpeaper.png";
+import wallpaperDark from "../../../public/assets/BarberProDarkV2-removebg (1).png";
 import { EmpresaTabs } from "./empresaTabs";
 import { BarbeariaProps } from "@/types/type";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -34,8 +34,7 @@ export const EmpresaSection1 = ({ data }: Props) => {
                     </Button>
                 </div>
             </div>
-            <Image alt="" src={wallpaperLight} className="dark:hidden rounded-md" />
-            <Image alt="" src={wallpaperDark} className="hidden dark:flex rounded-md" />
+            <Image alt="" src={wallpaperDark} className="rounded-md dark:bg-neutral-800 bg-[#F4F4F5]" />
             <EmpresaTabs id={data?.id} />
         </section>
     );

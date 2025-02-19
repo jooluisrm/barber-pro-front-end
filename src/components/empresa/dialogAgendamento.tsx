@@ -133,6 +133,14 @@ export const DialogAgendamento = ({ idBarbearia, idServico }: Props) => {
                     setSelectHorario("");
                     setSelectProfissional("");
                 }
+                else {
+                    toast("Faça login para continuar", {
+                        action: {
+                            label: "Fechar",
+                            onClick: () => console.log("Undo")
+                        }
+                    });
+                }
             } catch (error: any) {
                 toast(error.message, {
                     action: {
