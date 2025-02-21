@@ -15,15 +15,18 @@ type Props = {
 };
 
 export function DialogInfoAgendamento({ data }: Props) {
-
     const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0); // Zera horas, minutos, segundos e milissegundos
+
     const [ano, mes, dia] = data.data.split("-").map(Number);
 
     // Criar a data completa para o agendamento
     const dataAgendamento = new Date(ano, mes - 1, dia);
+    dataAgendamento.setHours(0, 0, 0, 0); // Zera horas, minutos, segundos e milissegundos
 
     // Verificar se a data do agendamento é anterior a hoje
     const isExpirado = hoje > dataAgendamento;
+    const isHoje = hoje.getTime() === dataAgendamento.getTime(); // Verifica se é o mesmo dia
 
     return (
         <Dialog>
@@ -48,7 +51,7 @@ export function DialogInfoAgendamento({ data }: Props) {
                     </div>
                     <div className={`flex gap-2 ${isExpirado && "dark:text-gray-400 text-gray-500"}`}>
                         <span className={`font-bold text-blue-500 ${isExpirado && "text-gray-400 dark:text-gray-500"}`}>
-                            {hoje.getDate() !== dia ? `${dia}/${mes}` : "Hoje"}
+                            {isHoje ? "Hoje" : `${dia}/${mes}`}
                         </span>
                         às
                         <span className="font-bold">{data.hora}h</span>
