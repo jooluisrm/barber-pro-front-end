@@ -18,10 +18,7 @@ type Props = {
 const RegisterFormSchema = z.object({
     nome: z
         .string()
-        .min(4, { message: "Nome completo deve ter pelo menos 4 caracteres" })
-        .regex(/^[A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]+(?: [A-ZÀ-ÖØ-Ý][a-zà-öø-ÿ]+)+$/, {
-            message: "Cada nome deve começar com letra maiúscula (ex: João Silva)"
-        }),
+        .min(4, { message: "Nome completo deve ter pelo menos 4 caracteres" }),
 
     email: z
         .string()
