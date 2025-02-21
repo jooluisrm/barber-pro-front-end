@@ -105,7 +105,7 @@ export const getBarbeariaRedesSociais = async (barbeariaId: string) => {
 
 export const getAllBarbearias = async () => {
     try {
-        const response = await axiosInstance.get(`/barbearias`);
+        const response = await axiosInstance.get(`/barbearia`);
         return response.data;
     } catch (error: any) {
         throw new Error(error.response?.data?.error || "Erro ao carregar barbearias");

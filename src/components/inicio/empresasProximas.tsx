@@ -66,7 +66,7 @@ export const EmpresasProximas = () => {
 
             {!error && skeleton && (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 py-5">
-                    {Array.from({ length: 6 }).map((_, index) => (
+                    {Array.from({ length: 8 }).map((_, index) => (
                         <SkeletonItemEmpresa key={index} />
                     ))}
                 </div>
