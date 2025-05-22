@@ -47,6 +47,7 @@ export const BuscarMain = () => {
                     try {
                         // Faz a requisição para buscar barbearias próximas
                         const dados = await buscarBarbeariasProximas(userLocation.latitude, userLocation.longitude);
+                        //console.log("aaaa");
                         setEmpresasProximas(dados);
                     } catch (erro) {
                         console.error("Erro ao buscar barbearias:", erro);
@@ -70,6 +71,7 @@ export const BuscarMain = () => {
             setSkeleton(true);
             try {
                 const dados = await getAllBarbearias();
+                //console.log(dados);
                 setEmpresasTodas(dados);
             } catch (error) {
                 console.log(error);

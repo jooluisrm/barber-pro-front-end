@@ -15,7 +15,7 @@ export type Barbearia = {
     nome: string;
     endereco: string;
     celular: string;
-    telefone: string;
+    telefone?: string;
     fotoPerfil: string | null;
     descricao: string | null;
     latitude: number;

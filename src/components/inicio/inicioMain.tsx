@@ -5,7 +5,7 @@ import { WelcomeSearch } from "./welcomeSearch";
 export const InicioMain = () => {
     return (
         <main>
-            <WelcomeSearch type="button"/>
+            <WelcomeSearch type="button" />
             <EmpresasProximas />
             <TodasAsEmpresas />
         </main>
