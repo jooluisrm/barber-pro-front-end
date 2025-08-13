@@ -14,8 +14,8 @@ export const ItemServico = ({ data, idBarbearia }: Props) => {
         <div className="flex items-center justify-between border-b pb-10 pt-5">
             <div className="flex items-center gap-5">
                 <Avatar className="size-14">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={`${data?.imagemUrl || "/favicon.png"} `} />
+                    <AvatarFallback>{data.nome.substring(0, 2).toUpperCase()}</AvatarFallback>
                 </Avatar>
                 <div>
                     <h3 className="font-bold sm:min-w-60">{data.nome}</h3>

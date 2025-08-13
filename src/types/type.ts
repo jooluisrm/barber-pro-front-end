@@ -77,6 +77,7 @@ export type Servico = {
     nome: string;
     duracao: number;
     preco?: string; // Pode ser ajustado para `Decimal` ou `number` dependendo do seu uso no banco de dados
+    imagemUrl?: string;
 };
 
 export type Profissional = {
@@ -111,4 +112,5 @@ export type Avaliacao = {
     nome: string; // Nome do usuário
     data: string; // Data da avaliação no formato ISO
     comentario: string; // Comentário da avaliação
+    fotoPerfil: string | null;
 };

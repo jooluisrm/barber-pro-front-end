@@ -20,8 +20,8 @@ export const ItemAvaliacao = ({ data }: Props) => {
         <div className="flex items-center justify-between gap-5 border-b pb-10 pt-5">
             <div className="flex items-center gap-5">
                 <Avatar className="size-14">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={`${data?.fotoPerfil || "/favicon.png"} `} />
+                    <AvatarFallback>{data.nome.substring(0, 2).toUpperCase()}</AvatarFallback>
                 </Avatar>
                 <div>
                     <h3 className="font-bold">{data.nome}</h3>

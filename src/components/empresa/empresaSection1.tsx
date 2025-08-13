@@ -19,9 +19,9 @@ export const EmpresaSection1 = ({ data }: Props) => {
                     <Avatar className="size-24">
                         <AvatarImage
                             className="border-2 rounded-full dark:bg-slate-50 bg-white "
-                            src={`../assets/BarberProIcone-removebg-preview.png`}
+                            src={`${data?.fotoPerfil || "/favicon.png"}`}
                         />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarFallback>{data?.nome.substring(0, 2).toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <div>
                         <h2 className="font-bold text-md md:text-2xl">{data?.nome}</h2>
