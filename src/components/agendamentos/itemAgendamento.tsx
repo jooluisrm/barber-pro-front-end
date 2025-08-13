@@ -35,7 +35,7 @@ export const ItemAgendamento = ({ data }: Props) => {
             ${isHoje ? "border-blue-500 border-2" : "border-gray-700"}`}>
             <div className="flex items-center gap-3">
                 <Avatar className="w-16 h-16">
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage src={`${data.servico?.imagemUrl || "favicon.png"} `} />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div>

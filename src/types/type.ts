@@ -44,6 +44,7 @@ export type AgendamentoResponse = {
         nome: string;
         preco: string;
         duracao: number;
+        imagemUrl: string | null;
     };
 };
 
