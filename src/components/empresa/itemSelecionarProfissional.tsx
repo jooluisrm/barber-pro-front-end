@@ -13,14 +13,14 @@ export const ItemSelecionarProfissional = ({ data, functionSelecionarProfissiona
     return (
         <div 
             onClick={() => functionSelecionarProfissional(data.id)} 
-            className={`flex flex-col items-center gap-1 cursor-pointer p-2 rounded-lg transition-all 
+            className={`flex flex-col gap-1 cursor-pointer p-2 rounded-lg transition-all  overflow-x-hidden w-24
                 ${isSelected ? "border-gray-400 bg-[#2f2f31] text-white dark:bg-white dark:text-black dark:border-blue-500" : "border-gray-500 hover:border-blue-500"}`}
         >
-            <Avatar className={isSelected ? "border-2 border-black" : ""}>
-                <AvatarImage src="https://github.com/shadcn.png" />
+            <Avatar className={`mx-auto ${isSelected ? "border-2 border-black" : ""}`}>
+                <AvatarImage src={`${data.fotoPerfil || '/favicon.png'}`} />
                 <AvatarFallback>{data.nome.charAt(0)}</AvatarFallback>
             </Avatar>
-            <p className="text-sm">{data.nome}</p>
+            <p className="text-sm truncate text-nowrap text-center">{data.nome}</p>
         </div>
     );
 };
