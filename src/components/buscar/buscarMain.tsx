@@ -103,7 +103,6 @@ export const BuscarMain = () => {
                 }
             }, 500); // 500ms de delay
 
-            // Limpar o timeout quando o inputBuscar mudar ou o componente for desmontado
             return () => clearTimeout(delayTimeout);
         }
     }, [inputBuscar]);

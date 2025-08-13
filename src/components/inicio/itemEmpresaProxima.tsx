@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const ItemEmpresaProxima = ({ data }: Props) => {
-    // img, Endereço, nome, km
+    
     return (
         <Link href={`empresa/${data?.nome}`}>
             <div className="flex justify-between items-center p-4 rounded-xl overflow-hidden max-w-[450px] border bg-[#f4f4f5] dark:bg-[#18181b] transition-all hover:scale-105 dark:hover:border-white hover:border-black">
@@ -17,15 +17,15 @@ export const ItemEmpresaProxima = ({ data }: Props) => {
                     <Avatar className="size-20">
                         <AvatarImage
                             className="border-2 rounded-full dark:bg-slate-50 bg-white"
-                            src={`assets/BarberProIcone-removebg-preview.png`}
+                            src={`${data.fotoPerfil || "favicon.png"}`}
                         />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarFallback>{data.nome.substring(0, 2).toUpperCase()}</AvatarFallback>
                     </Avatar>
 
                     <div>
                         <h2>{data?.nome}</h2>
                         <div className="flex flex-col gap-1">
-                            <p className="text-gray-500 dark:text-gray-400 w-44 lg:w-52  overflow-hidden text-nowrap text-sm">{data?.endereco}</p>
+                            <p className="text-gray-500 dark:text-gray-400 w-44 lg:w-52  overflow-hidden text-nowrap text-sm truncate">{data?.endereco}</p>
                             <div className="flex gap-1 items-center text-sm">
 
                                 {data?.distancia && (<>
