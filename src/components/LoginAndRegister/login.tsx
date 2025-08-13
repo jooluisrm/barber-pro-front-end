@@ -18,9 +18,6 @@ const LoginFormSchema = z.object({
     email: z.string().email({ message: "Por favor, insira um e-mail válido" }),
     senha: z.string()
         .min(6, { message: "Senha deve ter no mínimo 6 caracteres" })
-        .regex(/[a-z]/, { message: "Deve conter uma letra minúscula" })
-        .regex(/[A-Z]/, { message: "Deve conter uma letra maiúscula" })
-        .regex(/[0-9]/, { message: "Deve conter um número" }),
 });
 
 export const Login = ({ nextPage }: Props) => {

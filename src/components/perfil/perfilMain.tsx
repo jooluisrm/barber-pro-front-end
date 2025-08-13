@@ -7,8 +7,6 @@ import { useEffect } from "react";
 
 export const PerfilMain = () => {
 
-    
-
     return (
         <main className="grid grid-cols-1 md:flex justify-center gap-10 py-10">
             <Section1 />

@@ -26,11 +26,7 @@ const RegisterFormSchema = z.object({
 
     senha: z
         .string()
-        .min(6, { message: "Senha deve ter no mínimo 6 caracteres" })
-        .regex(/[a-z]/, { message: "Senha deve conter pelo menos uma letra minúscula" })
-        .regex(/[A-Z]/, { message: "Senha deve conter pelo menos uma letra maiúscula" })
-        .regex(/[0-9]/, { message: "Senha deve conter pelo menos um número" }),
-
+        .min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
 
     telefone: z
         .string()

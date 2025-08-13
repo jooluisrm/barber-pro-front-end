@@ -10,12 +10,12 @@ export const Section1 = () => {
 
     return (
         <section className="">
-            <div className="border-b pb-5">
+            <div className="border-b pb-5 overflow-hidden">
                 <div className="">
                     <UserCircle2 size={100} />
                 </div>
                 <div>
-                    <p className="text-xl">{perfil?.nome}</p>
+                    <p className="text-xl truncate text-nowrap">{perfil?.nome}</p>
                     <p className="text-gray-400 text-sm">{perfil?.email}</p>
                 </div>
             </div>
