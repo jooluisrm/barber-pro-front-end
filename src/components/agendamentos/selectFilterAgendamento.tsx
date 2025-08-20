@@ -1,4 +1,4 @@
-import * as React from "react"
+"use client"
 
 import {
     Select,
@@ -17,17 +17,17 @@ type Props = {
 
 export function SelectFilterAgendamento({ selectFilter, onChange }: Props) {
     return (
-        <Select onValueChange={onChange} defaultValue={selectFilter}>
+        // ATUALIZADO: Usando 'value' em vez de 'defaultValue'
+        <Select onValueChange={onChange} value={selectFilter}>
             <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filtrar Agendamentos" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    <SelectLabel>Agendamento</SelectLabel>
-                    <SelectItem value="proximo">Próximos</SelectItem>
-                    <SelectItem value="cancelado">Cancelados</SelectItem>
-                    <SelectItem value="feito">Feito</SelectItem>
-                    <SelectItem value="todos">Todos</SelectItem>
+                    <SelectLabel>Filtros</SelectLabel>
+                    {/* ATUALIZADO: Usando os valores da nova API */}
+                    <SelectItem value="futuros">Próximos</SelectItem>
+                    <SelectItem value="passados">Histórico</SelectItem>
                 </SelectGroup>
             </SelectContent>
         </Select>

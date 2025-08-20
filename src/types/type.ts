@@ -25,27 +25,52 @@ export type Barbearia = {
 };
 
 export type AgendamentoResponse = {
+    // Campos principais do agendamento
     id: string;
     data: string; // Formato "YYYY-MM-DD"
     hora: string; // Formato "HH:mm"
     status: string;
+    valorTotal: string | null;
+
+    // Campos do cliente (agora opcionais)
+    usuarioId: string | null;
+    nomeVisitante: string | null;
+    telefoneVisitante: string | null;
+    
+    // Relações aninhadas
     barbearia: {
         id: string;
         nome: string;
         endereco: string;
-        celular: string;
     };
     barbeiro: {
         id: string;
         nome: string;
     };
-    servico: {
+
+    // MUDANÇA PRINCIPAL: Agora é uma lista de serviços
+    servicosRealizados: {
         id: string;
-        nome: string;
-        preco: string;
-        duracao: number;
-        imagemUrl: string | null;
-    };
+        precoNoMomento: string;
+        servico: {
+            id: string;
+            nome: string;
+            duracao: number;
+            preco: string;
+            imagemUrl: string | null;
+        };
+    }[];
+
+    // Incluindo a lista de produtos, mesmo que venha vazia
+    produtosConsumidos: {
+        id: string;
+        quantidade: number;
+        precoVendaNoMomento: string;
+        produto: {
+            nome: string;
+            precoVenda: string | null;
+        };
+    }[];
 };
 
 export type HorarioFuncionamento = {
@@ -101,10 +126,9 @@ export type Produto = {
     barbeariaId: string;
     nome: string;
     descricao?: string; // Opcional
-    preco: number; // Alterado para number, já que preço é numérico
+    precoVenda: string; // Alterado para number, já que preço é numérico
     tipo: string;
     imagemUrl?: string | null; // Pode ser null ou string
-    estoque: boolean;
 };
 
 export type Avaliacao = {

@@ -47,12 +47,15 @@ export const atualizarPerfil = async (dados: AtualizarPerfilData) => {
     }
 };
 
-export const carregarAgendamentos = async (usuarioId: string) => {
+export const carregarAgendamentos = async (filtro: 'futuros' | 'passados') => {
     try {
-        const response = await axiosInstance.get(`/agendamentos/${usuarioId}`);
+        // Usa a nova rota segura e passa o filtro como query param
+        const response = await axiosInstance.get(`/agendamentos/meus-agendamentos?filtro=${filtro}`);
         return response.data;
     } catch (error: any) {
-        throw error.response?.data?.error;
+        console.error("Erro ao carregar agendamentos do usuário:", error);
+        // Retorna um array vazio em caso de erro (ex: 404) para não quebrar a interface
+        return []; 
     }
 }
 

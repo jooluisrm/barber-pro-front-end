@@ -1,11 +1,13 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "../ui/button";
-import { Trash2 } from "lucide-react";
-import { AgendamentoResponse } from "@/types/type";
+"use client"
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"; // Use o seu tipo correto
 import { converterMes } from "@/utils/conversorMes";
-import { DialogInfoAgendamento } from "./dialogInfoAgendamento";
+import { formatarPreco } from "@/utils/formatarValores";
 import { AlertDialogCandelarAgendamento } from "./alertDialogCancelarAgendamento";
-import { AlertDialogDeletarAgendamento } from "./alertDialogDeletarAgendamento";
+import { useMemo } from "react";
+import { Badge } from "@/components/ui/badge"; // 1. Importe o Badge
+import { Clock } from "lucide-react"; // Opcional: ícone para o horário
+import { AgendamentoResponse } from "@/types/type";
 
 type Props = {
     data: AgendamentoResponse;
@@ -13,46 +15,65 @@ type Props = {
 
 export const ItemAgendamento = ({ data }: Props) => {
     const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0); // Zera horas, minutos, segundos e milissegundos
-
+    hoje.setHours(0, 0, 0, 0);
+    const dataAgendamento = new Date(data.data.replace(/-/g, '/'));
+    const isExpirado = hoje > dataAgendamento;
+    const isHoje = hoje.getTime() === dataAgendamento.getTime();
     const [ano, mes, dia] = data.data.split("-").map(Number);
     const mesFormatado = converterMes(mes - 1);
+    const valorCalculado = useMemo(() => { /* ... sua lógica de cálculo ... */ }, [data]);
+    const imagemPrincipal = data.servicosRealizados?.[0]?.servico?.imagemUrl;
 
-    // Criar uma data para o agendamento
-    const dataAgendamento = new Date(ano, mes - 1, dia);
-    dataAgendamento.setHours(0, 0, 0, 0); // Zera horas, minutos, segundos e milissegundos
-
-    // Comparar a data do agendamento com a data de hoje
-    const isExpirado = hoje > dataAgendamento;
-    const isHoje = hoje.getTime() === dataAgendamento.getTime(); // Verifica se é o mesmo dia
+    // 2. Lógica para definir a cor e o estilo do Badge
+    const getStatusVariant = (): "default" | "destructive" | "secondary" | "outline" => {
+        if (data.status === 'Feito') return 'default'; // Verde (padrão do tema)
+        if (data.status === 'Cancelado') return 'destructive'; // Vermelho
+        if (data.status === 'Confirmado' && isExpirado) return 'outline'; // Laranja/Amarelo
+        return 'secondary'; // Cinza para Confirmado
+    };
 
     return (
-        <div className={`bg-[#F4F4F5] dark:bg-[#18181B] flex justify-between items-center rounded-2xl py-3 px-5 md:px-10 border 
-            ${data.status === "Feito" && "border-green-600"}  
-            ${data.status === "Cancelado" && "border-red-500"} 
-            ${isExpirado && data.status != "Feito" && "border-red-500"}  
-            ${!isExpirado && data.status === "Confirmado" && !isHoje && "border-yellow-500"}  
-            ${isHoje ? "border-blue-500 border-2" : "border-gray-700"}`}>
-            <div className="flex items-center gap-3">
-                <Avatar className="w-16 h-16">
-                    <AvatarImage src={`${data.servico?.imagemUrl || "favicon.png"} `} />
-                    <AvatarFallback>CN</AvatarFallback>
+        <div className={`
+            bg-card border rounded-lg p-4 flex justify-between items-center transition-all
+            ${data.status === 'Feito' && 'border-green-500/50'}
+            ${data.status === 'Cancelado' && 'opacity-60 border-red-500/50'}
+            ${data.status === 'Confirmado' && isExpirado && 'border-orange-500/50'}
+            ${isHoje && data.status === "Confirmado" ? "border-primary border-2" : ""}
+        `}>
+            <div className="flex items-center gap-4">
+                <Avatar className="w-16 h-16 hidden sm:flex">
+                    <AvatarImage src={imagemPrincipal || "/favicon.png"} />
+                    <AvatarFallback>{data.barbearia.nome.substring(0, 2).toUpperCase()}</AvatarFallback>
                 </Avatar>
-                <div>
-                    <h3 className="text-lg">{data.barbearia.nome}</h3>
-                    <p className="text-gray-500 dark:text-gray-400 font-bold">{data.servico.nome} - {data.hora}h</p>
-                    <DialogInfoAgendamento data={data} />
+                <div className="space-y-1.5">
+                    <h3 className="font-bold text-lg">{data.barbearia.nome}</h3>
+                    <p className="text-sm text-muted-foreground font-semibold max-w-[200px] truncate">
+                        {data.servicosRealizados?.map(s => s.servico.nome).join(', ') || 'Serviço não informado'}
+                    </p>
+                    <p className="text-sm text-muted-foreground">com {data.barbeiro.nome}</p>
+                    
+                    {/* 3. ADICIONADO: Campo de Horário */}
+                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground font-bold pt-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{data.hora}</span>
+                    </div>
                 </div>
             </div>
-            <div className="text-center">
-                <div className="flex flex-col justify-center mb-2">
-                    <p className={`text-xl font-bold ${isHoje && "text-blue-500"}`}>{dia}</p>
-                    <p className={`text-sm font-bold ${isHoje && "text-blue-500"}`}>{mesFormatado.toUpperCase()}</p>
+            <div className="text-center space-y-2">
+                <div className="flex flex-col">
+                    <p className={`text-xl font-bold ${isHoje && "text-primary"}`}>{dia}</p>
+                    <p className={`text-sm font-bold ${isHoje && "text-primary"}`}>{mesFormatado.toUpperCase()}</p>
                 </div>
-                {data.status === "Confirmado" && <AlertDialogCandelarAgendamento idAgendamento={data.id} />}
-                {data.status != "Confirmado" && <AlertDialogDeletarAgendamento idAgendamento={data.id} />}
+
+                {/* 4. ADICIONADO: Badge de Status */}
+                <Badge variant={getStatusVariant()}>{data.status}</Badge>
+
+                {data.status === "Confirmado" && !isExpirado && (
+                    <div className="pt-2">
+                        <AlertDialogCandelarAgendamento idAgendamento={data.id} />
+                    </div>
+                )}
             </div>
         </div>
     );
 };
-
