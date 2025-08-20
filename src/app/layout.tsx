@@ -6,10 +6,36 @@ import { MenuMobile } from "@/components/menuMobile/menuMobile";
 import { Footer } from "@/components/footer/footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
+import { Metadata } from "next";
 
 type Props = {
     children: ReactNode;
 }
+
+export const metadata: Metadata= {
+  title: "BarberPro",
+  description: "Sistema de agendamento e gestão para barbearias",
+  icons: {
+    icon: "/favicon.png", // ✅ arquivo na pasta /public
+    shortcut: "/favicon.ico", // navegadores antigos
+    apple: "/apple-touch-icon.png", // iOS homescreen
+  },
+  openGraph: {
+    title: "BarberPro",
+    description: "Agende seu horário de forma prática e rápida",
+    siteName: "BarberPro",
+    images: [
+      {
+        url: "./favicon.png",
+        width: 500,
+        height: 500,
+        alt: "BarberPro - Gestão para Barbearias",
+      },
+    ],
+    locale: "pt_BR",
+    type: "website",
+  },
+};
 
 const Layout = ({ children }: Props) => {
     return (
