@@ -2,51 +2,46 @@
 
 import { cancelarAgendamento } from "@/api/usuario/usuarioService"
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
+    AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+    AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { Ban, Trash2 } from "lucide-react"
+import { Ban, LoaderCircle } from "lucide-react"
+import { useState } from "react"
 import { toast } from "sonner"
 
+// 1. ATUALIZADO: Adicionamos a prop de callback
 type Props = {
     idAgendamento: string;
+    onCancelSuccess: () => void; // Função a ser chamada em caso de sucesso
 }
 
-export const AlertDialogCandelarAgendamento = ({ idAgendamento }: Props) => {
+export const AlertDialogCandelarAgendamento = ({ idAgendamento, onCancelSuccess }: Props) => {
+    const [loading, setLoading] = useState(false);
 
     const handleCancelarAgendamento = async () => {
-        console.log("Cancelando agendamento com ID:", idAgendamento); // Adicione esse log
+        setLoading(true);
         try {
             const result = await cancelarAgendamento(idAgendamento);
-            toast(result.message, {
-                action: {
-                    label: "Fechar",
-                    onClick: () => console.log("Undo")
-                }
-            })
+            toast.success(result.message || "Agendamento cancelado com sucesso!");
+
+            // 2. ATUALIZADO: Chama a função de callback para avisar o pai
+            onCancelSuccess();
+
         } catch (error: any) {
             console.error("Erro ao cancelar agendamento:", error);
-            toast(error, {
-                action: {
-                    label: "Fechar",
-                    onClick: () => console.log("Undo")
-                }
-            })
+            toast.error(error.message || "Não foi possível cancelar o agendamento.");
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button variant={"destructive"}><Ban /></Button>
+                <Button variant={"destructive"} size="sm" disabled={loading}>
+                    <Ban className="h-4 w-4" />
+                </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -57,10 +52,13 @@ export const AlertDialogCandelarAgendamento = ({ idAgendamento }: Props) => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Voltar</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => handleCancelarAgendamento()} className="font-bold text-white bg-red-500 hover:bg-opacity-60">Confirmar</AlertDialogAction>
+                    <AlertDialogAction asChild>
+                        <Button variant={'destructive'} onClick={handleCancelarAgendamento} disabled={loading}>
+                            {loading ? <LoaderCircle className="animate-spin" /> : "Confirmar Cancelamento"}
+                        </Button>
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
-
     )
 }

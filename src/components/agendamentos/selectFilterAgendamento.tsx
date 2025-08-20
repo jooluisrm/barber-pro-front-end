@@ -1,14 +1,6 @@
 "use client"
 
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 type Props = {
     selectFilter: string;
@@ -17,17 +9,17 @@ type Props = {
 
 export function SelectFilterAgendamento({ selectFilter, onChange }: Props) {
     return (
-        // ATUALIZADO: Usando 'value' em vez de 'defaultValue'
         <Select onValueChange={onChange} value={selectFilter}>
             <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filtrar Agendamentos" />
+                <SelectValue placeholder="Filtrar por Status" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    <SelectLabel>Filtros</SelectLabel>
-                    {/* ATUALIZADO: Usando os valores da nova API */}
-                    <SelectItem value="futuros">Próximos</SelectItem>
-                    <SelectItem value="passados">Histórico</SelectItem>
+                    <SelectLabel>Status</SelectLabel>
+                    <SelectItem value="Confirmado">Confirmados</SelectItem>
+                    <SelectItem value="Feito">Finalizados</SelectItem>
+                    <SelectItem value="Cancelado">Cancelados</SelectItem>
+                    <SelectItem value="todos">Todos</SelectItem>
                 </SelectGroup>
             </SelectContent>
         </Select>

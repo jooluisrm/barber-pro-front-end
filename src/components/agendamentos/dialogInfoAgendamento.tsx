@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+"use client"
+
 import {
     Dialog,
     DialogContent,
@@ -9,58 +10,140 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { AgendamentoResponse } from "@/types/type";
+import { Eye, MapPin, Scissors, Tag, Beer, DollarSign, Clock, Calendar, ShoppingBasketIcon } from "lucide-react";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
+import { formatarPreco } from "@/utils/formatarValores";
+import { useMemo } from "react";
+import { Badge } from "../ui/badge";
+import { parse, addMinutes, isPast, isWithinInterval } from "date-fns";
 
 type Props = {
     data: AgendamentoResponse;
 };
 
 export function DialogInfoAgendamento({ data }: Props) {
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0); // Zera horas, minutos, segundos e milissegundos
 
-    const [ano, mes, dia] = data.data.split("-").map(Number);
+    // Lógica para calcular o valor total, como já fizemos antes
+    const valorCalculado = useMemo(() => {
+        if (data.status === 'Feito' && data.valorTotal) {
+            return Number(data.valorTotal);
+        }
+        const valorServicos = data.servicosRealizados?.reduce((acc, s) => acc + Number(s.precoNoMomento || 0), 0) || 0;
+        const valorProdutos = data.produtosConsumidos?.reduce((acc, p) => acc + (Number(p.precoVendaNoMomento || 0) * p.quantidade), 0) || 0;
+        return valorServicos + valorProdutos;
+    }, [data]);
 
-    // Criar a data completa para o agendamento
-    const dataAgendamento = new Date(ano, mes - 1, dia);
-    dataAgendamento.setHours(0, 0, 0, 0); // Zera horas, minutos, segundos e milissegundos
 
-    // Verificar se a data do agendamento é anterior a hoje
-    const isExpirado = hoje > dataAgendamento;
-    const isHoje = hoje.getTime() === dataAgendamento.getTime(); // Verifica se é o mesmo dia
+    const getSmartStatus = () => {
+        // Status finais não mudam
+        if (data.status === 'Feito') return { text: 'Finalizado', variant: 'default' as const };
+        if (data.status === 'Cancelado') return { text: 'Cancelado', variant: 'destructive' as const };
+
+        // Calcula a duração total dos serviços em minutos
+        const duracaoTotal = data.servicosRealizados.reduce((total, item) => total + item.servico.duracao, 0);
+        
+        // Cria objetos Date para início e fim do agendamento
+        const dataInicio = parse(`${data.data} ${data.hora}`, 'yyyy-MM-dd HH:mm', new Date());
+        const dataFim = addMinutes(dataInicio, duracaoTotal);
+        const agora = new Date();
+
+        // Verifica os diferentes cenários para agendamentos "Confirmados"
+        if (isPast(dataFim)) {
+            return { text: 'Vencido', variant: 'outline' as const }; // Já acabou
+        }
+        if (isWithinInterval(agora, { start: dataInicio, end: dataFim })) {
+            return { text: 'Agora', variant: 'secondary' as const }; // Está no horário
+        }
+        
+        // Se nenhuma das condições acima for atendida, ele ainda está por vir
+        return { text: 'Confirmado', variant: 'secondary' as const };
+    };
+
+    const smartStatus = getSmartStatus();
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <div className="hover:underline cursor-pointer w-16">ver mais</div>
+                <Button size={"sm"}  className=""><ShoppingBasketIcon /></Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Informações sobre seu Agendamento</DialogTitle>
+                    <DialogTitle className="text-xl">Detalhes do Agendamento</DialogTitle>
                     <DialogDescription>
-                        <div>
-                            {data.barbearia.nome} - {data.barbearia.endereco}
-                        </div>
-                        <div>
-                            Profissional: {data.barbeiro.nome}
-                        </div>
+                        Todas as informações sobre o seu horário.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex flex-col justify-center gap-1">
+
+                <div className="space-y-4">
+                    {/* Seção da Barbearia */}
                     <div>
-                        <span className="font-bold">{data.servico.nome}</span> - <span className="font-bold">{data.servico.duracao} min</span> - <span className="text-green-600 font-bold">R$ {data.servico.preco ? Number(data.servico.preco).toFixed(2) : "valor não informado!"}</span>
+                        <h3 className="font-semibold mb-2">{data.barbearia.nome}</h3>
+                        <div className="text-sm text-muted-foreground space-y-1">
+                            <p className="flex items-center gap-2">
+                                <MapPin className="w-4 h-4" />
+                                {data.barbearia.endereco}
+                            </p>
+                            <p className="flex items-center gap-2">
+                                <Scissors className="w-4 h-4" />
+                                Agendado com: <span className="font-medium text-foreground">{data.barbeiro.nome}</span>
+                            </p>
+                        </div>
                     </div>
-                    <div className={`flex gap-2 ${isExpirado && "dark:text-gray-400 text-gray-500"}`}>
-                        <span className={`font-bold text-blue-500 ${isExpirado && "text-gray-400 dark:text-gray-500"}`}>
-                            {isHoje ? "Hoje" : `${dia}/${mes}`}
-                        </span>
-                        às
-                        <span className="font-bold">{data.hora}h</span>
-                        {isExpirado && <span>- <span className="text-red-500 font-bold">Data expirada</span></span>}
+
+                    <Separator />
+
+                    {/* Seção de Data, Hora e Status */}
+                    <div className="grid grid-cols-2 gap-4">
+                         <div className="flex items-center gap-2 text-sm">
+                            <Calendar className="w-4 h-4 text-muted-foreground" />
+                            <div>
+                                <p className="text-muted-foreground">Data</p>
+                                <p className="font-semibold">{new Date(data.data.replace(/-/g, '/')).toLocaleDateString('pt-BR')}</p>
+                            </div>
+                        </div>
+                         <div className="flex items-center gap-2 text-sm">
+                            <Clock className="w-4 h-4 text-muted-foreground" />
+                            <div>
+                                <p className="text-muted-foreground">Hora</p>
+                                <p className="font-semibold">{data.hora}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="font-bold">
-                        Status: {data.status}
+                    <div>
+                        <Badge variant={smartStatus.variant} className="text-xs">
+                            {smartStatus.text}
+                        </Badge>
+                    </div>
+
+                    <Separator />
+                    
+                    {/* Seção de Itens da Comanda */}
+                    <div>
+                        <h3 className="font-semibold mb-2">Sua Comanda</h3>
+                        <div className="space-y-2 text-sm">
+                            {/* Serviços */}
+                            {data.servicosRealizados.map(item => (
+                                <div key={item.id} className="flex justify-between">
+                                    <span className="flex items-center gap-2"><Tag className="w-4 h-4" />{item.servico.nome}</span>
+                                    <span>{formatarPreco(item.precoNoMomento)}</span>
+                                </div>
+                            ))}
+                            {/* Produtos */}
+                            {data.produtosConsumidos.map(item => (
+                                <div key={item.id} className="flex justify-between">
+                                    <span className="flex items-center gap-2"><Beer className="w-4 h-4" />{item.produto.nome} (x{item.quantidade})</span>
+                                    <span>{formatarPreco(String(Number(item.precoVendaNoMomento) * item.quantidade))}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
+
+                <DialogFooter className="border-t pt-4 mt-4 flex justify-between w-full">
+                    <h3 className="text-lg font-bold">Total</h3>
+                    <p className="text-lg font-bold text-primary text-green-500">{formatarPreco(valorCalculado.toFixed(2))}</p>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
